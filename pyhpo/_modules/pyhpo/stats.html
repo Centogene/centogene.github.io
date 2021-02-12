@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pyhpo.stats &mdash; PyHPO 2.7.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.7.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ontology.html">Ontology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../set.html">HPOSet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Handling master data</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyhpo.stats</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyhpo.stats</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">hypergeom</span>  <span class="c1"># type: ignore[import]</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;The pyhpo.stats module requires that you install scipy.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">#######################################################&#39;</span>
+        <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">#   ==&gt; Please install scipy via `pip install scipy`  #&#39;</span>
+        <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">#######################################################</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">pyhpo</span>
+<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">HPOSet</span>
+
+
+<span class="k">def</span> <span class="nf">hypergeom_test</span><span class="p">(</span>
+    <span class="n">positive_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">positive_total</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">total</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper function to call the scipy hypergeometric stats function</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        positive_samples: int</span>
+<span class="sd">            Number of successes in the sample set (correctly drawn marbles)</span>
+<span class="sd">        samples: int</span>
+<span class="sd">            Total number of samples (number of drawn marbles)</span>
+<span class="sd">        positive_total: int</span>
+<span class="sd">            Number of positives in the reference set</span>
+<span class="sd">            (number of positive marbles in the bag)</span>
+<span class="sd">        total: int</span>
+<span class="sd">            Total size of reference set</span>
+<span class="sd">            (number of marbles in the bag)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The hypergeometic enrichment score</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">hypergeom</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+        <span class="n">positive_samples</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># likelyhood of more than X, #see https://blog.alexlenail.me/understanding-and-implementing-the-hypergeometric-test-in-python-a7db688a7458  # noqa: 501</span>
+        <span class="n">total</span><span class="p">,</span>
+        <span class="n">positive_total</span><span class="p">,</span>
+        <span class="n">samples</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="HPOEnrichment"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.HPOEnrichment">[docs]</a><span class="k">class</span> <span class="nc">HPOEnrichment</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the enrichment of HPO Terms in an Annotation set.</span>
+
+<span class="sd">    You can use this class for the following example use cases:</span>
+
+<span class="sd">    * You have a list of genes and want to see if some HPO terms are</span>
+<span class="sd">      enriched in that group. (e.g. RNAseq differential gene expression)</span>
+<span class="sd">    * You have a list of OMIM diseases and want to see if they have</span>
+<span class="sd">      some underlying HPO symptom.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    category: str</span>
+<span class="sd">        String to declare if enrichment is done for genes or for OMIM diseases</span>
+
+<span class="sd">        Options are:</span>
+
+<span class="sd">        * **gene**</span>
+<span class="sd">        * **omim**</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">category_lookup</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;gene&#39;</span><span class="p">:</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">genes</span><span class="p">,</span>
+            <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">omim_diseases</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hpos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo_count</span><span class="p">(</span>
+            <span class="n">category_lookup</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>  <span class="c1"># type: ignore[arg-type]</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="HPOEnrichment.enrichment"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.HPOEnrichment.enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">enrichment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">annotation_sets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;pyhpo.Annotation&#39;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the enrichment of HPO terms in the provided annotation set</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        method: str</span>
+<span class="sd">            The statistical test for enrichment</span>
+
+<span class="sd">            * **hypergeom** Hypergeometric distribution test</span>
+
+<span class="sd">        annotation_sets: list of ``annoation``</span>
+<span class="sd">            Every ``annotation`` item in the list must have an attribute</span>
+<span class="sd">            ``hpos``, being a list of HPO-Term indicies</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            The enrichment of every HPO term in the ``annotation_sets`` list,</span>
+<span class="sd">            sorted by descending enrichment. Every dict has the following keys:</span>
+
+<span class="sd">            * **hpo**: :class:`.HPOTerm`</span>
+<span class="sd">            * **count**: Number of appearances in the sets</span>
+<span class="sd">            * **enrichment**: Enrichment score</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">list_counts</span><span class="p">,</span> <span class="n">list_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo_count</span><span class="p">(</span><span class="n">annotation_sets</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s1">&#39;hpo&#39;</span><span class="p">:</span> <span class="n">Ontology</span><span class="p">[</span><span class="n">hpo</span><span class="p">],</span>
+            <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;enrichment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_enrichment</span><span class="p">(</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="n">hpo</span><span class="p">,</span>
+                <span class="n">count</span><span class="p">,</span>
+                <span class="n">list_total</span>
+            <span class="p">)}</span> <span class="k">for</span> <span class="n">hpo</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">list_counts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;enrichment&#39;</span><span class="p">])</span></div>
+
+    <span class="k">def</span> <span class="nf">_hpo_count</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">annotation_sets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;pyhpo.Annotation&#39;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Counts the number of occurrenes of every HPO term</span>
+<span class="sd">        in the ``annotation_sets``</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            annotation_set: list of ``annoation``</span>
+<span class="sd">                Every ``annotation`` item in the list must have an attribute</span>
+<span class="sd">                ``hpos``, returning an iterable of :class:`.HPOTerm`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple with following items:</span>
+<span class="sd">            * Dict with</span>
+<span class="sd">                * key: :class:`.HPOTerm`</span>
+<span class="sd">                * value: int &lt;Number of occurences&gt;</span>
+<span class="sd">            * Total number of HPO terms in set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hpos</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">annotation_sets</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">hpo</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hpos</span><span class="p">:</span>
+                    <span class="n">hpos</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">hpos</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">hpos</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">hpos</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_single_enrichment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">hpo_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">],</span>
+        <span class="n">positives</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the enrichment of a single HPO term compared to</span>
+<span class="sd">        the reference set</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            method: str</span>
+<span class="sd">                The statistical test for enrichment</span>
+
+<span class="sd">                * **hypergeom** Hypergeometric distribution test</span>
+
+<span class="sd">            hpo_id: int or :class:`.HPOTerm`</span>
+<span class="sd">                ID of the HPO Term</span>
+<span class="sd">            positives: int</span>
+<span class="sd">                Number of successes in the sample set (correctly drawn marbles)</span>
+<span class="sd">            samples: int</span>
+<span class="sd">                Total number of samples (number of drawn marbles)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The enrichment score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">positive_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hpos</span><span class="p">[</span><span class="n">hpo_id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s1">&#39;The HPO term </span><span class="si">{}</span><span class="s1"> is not present in the &#39;</span>
+                <span class="s1">&#39;reference population&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hpo_id</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;hypergeom&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hypergeom_test</span><span class="p">(</span>
+                <span class="n">positives</span><span class="p">,</span>
+                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">positive_total</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Enrichment method not implemented&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EnrichmentModel"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.EnrichmentModel">[docs]</a><span class="k">class</span> <span class="nc">EnrichmentModel</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the enrichment of annotations in an :class:`.HPOSet`.</span>
+
+<span class="sd">    You can use this class for the following example use cases:</span>
+
+<span class="sd">    * You have a set of HPOTerms and want to find the</span>
+<span class="sd">      most likely causative gene</span>
+<span class="sd">    * You have a set of HPOTerms and want to find the underlying disease</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    category: str</span>
+<span class="sd">        String to declare if enrichment is done for genes or for OMIM diseases</span>
+
+<span class="sd">        Options are:</span>
+
+<span class="sd">        * **gene**</span>
+<span class="sd">        * **omim**</span>
+<span class="sd">        * **orpha**</span>
+<span class="sd">        * **decipher**</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">attribute_lookup</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;gene&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">genes</span><span class="p">,</span>
+        <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">,</span>
+        <span class="s1">&#39;orpha&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">,</span>
+        <span class="s1">&#39;decipher&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">decipher_diseases</span>
+    <span class="p">}</span>
+    <span class="n">base_lookup</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;gene&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Gene</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
+        <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Omim</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
+        <span class="s1">&#39;orpha&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Orpha</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
+        <span class="s1">&#39;decipher&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Decipher</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribute_lookup</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_lookup</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_population_count</span><span class="p">(</span><span class="n">HPOSet</span><span class="p">(</span><span class="n">Ontology</span><span class="p">))</span>
+
+<div class="viewcode-block" id="EnrichmentModel.enrichment"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.EnrichmentModel.enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">enrichment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">hposet</span><span class="p">:</span> <span class="n">HPOSet</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the enrichment of annotations in the provided HPOSet</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        method: str</span>
+<span class="sd">            The statistical test for enrichment</span>
+
+<span class="sd">            * **hypergeom** Hypergeometric distribution test</span>
+
+<span class="sd">        hposet: :class:`.HPOSet`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            The enrichment of every annotation item sorted by</span>
+<span class="sd">            descending enrichment. Every dict has the following keys:</span>
+
+<span class="sd">            * **item**: Gene or OMIM or Decipher annotation item</span>
+<span class="sd">            * **count**: Number of appearances in the sets</span>
+<span class="sd">            * **enrichment**: Enrichment score</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">list_counts</span><span class="p">,</span> <span class="n">list_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_population_count</span><span class="p">(</span><span class="n">hposet</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s1">&#39;item&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">,</span>
+            <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;enrichment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_enrichment</span><span class="p">(</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">count</span><span class="p">,</span>
+                <span class="n">list_total</span>
+            <span class="p">)}</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">list_counts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;enrichment&#39;</span><span class="p">])</span></div>
+
+    <span class="k">def</span> <span class="nf">_population_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hopset</span><span class="p">:</span> <span class="n">HPOSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Counts the number of occurrenes of every annotation item</span>
+<span class="sd">        in the HPOSet</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            hposet: :class:`.HPOSet`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple with following items:</span>
+<span class="sd">            * Dict with</span>
+<span class="sd">                * key: Annotation Item</span>
+<span class="sd">                * value: int &lt;Number of occurences&gt;</span>
+<span class="sd">            * Total number of annotations in set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">hopset</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+                    <span class="n">population</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">population</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">population</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">population</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_single_enrichment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">positives</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the enrichment of annotations in an HPO set</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            method: str</span>
+<span class="sd">                The statistical test for enrichment</span>
+
+<span class="sd">                * **hypergeom** Hypergeometric distribution test</span>
+
+<span class="sd">            item_id: int</span>
+<span class="sd">                ID of the Annotation</span>
+<span class="sd">            positives: int</span>
+<span class="sd">                Number of successes in the sample set (correctly drawn marbles)</span>
+<span class="sd">            samples: int</span>
+<span class="sd">                Total number of samples (number of drawn marbles)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The enrichment score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">positive_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_count</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s1">&#39;The item </span><span class="si">{}</span><span class="s1"> is not present in the &#39;</span>
+                <span class="s1">&#39;reference population&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;hypergeom&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hypergeom_test</span><span class="p">(</span>
+                <span class="n">positives</span><span class="p">,</span>
+                <span class="n">samples</span><span class="p">,</span>
+                <span class="n">positive_total</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Enrichment method not implemented&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Jonas Marcello.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

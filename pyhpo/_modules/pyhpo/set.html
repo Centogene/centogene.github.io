@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pyhpo.set &mdash; PyHPO 2.7.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.7.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ontology.html">Ontology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../set.html">HPOSet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Handling master data</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyhpo.set</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyhpo.set</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">pyhpo</span>
+<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+<span class="kn">from</span> <span class="nn">pyhpo.matrix</span> <span class="kn">import</span> <span class="n">Matrix</span>
+
+
+<div class="viewcode-block" id="HPOSet"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet">[docs]</a><span class="k">class</span> <span class="nc">HPOSet</span><span class="p">(</span><span class="nb">set</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">set</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overwrites ``set.add`` to ensure we keep the</span>
+<span class="sd">        ``self._list`` property updated as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="nb">set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>  <span class="c1"># type: ignore[override]</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">items</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overwrites ``set.update`` to ensure we keep the</span>
+<span class="sd">        ``self._list`` property updated as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HPOSet.child_nodes"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.child_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">child_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a new HPOSet tha contains only</span>
+<span class="sd">        the most specific HPO term for each subtree</span>
+
+<span class="sd">        It basically will return only HPO terms</span>
+<span class="sd">        that do not have descendant HPO terms</span>
+<span class="sd">        present in the set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOSet</span>
+<span class="sd">            HPOSet instance that contains only the most specific</span>
+<span class="sd">            child nodes of the current HPOSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">child</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">combinations</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">child_of</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+                <span class="n">counter</span><span class="p">[</span><span class="n">parent</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">HPOSet</span><span class="p">([</span>
+            <span class="n">term</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">counter</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="HPOSet.remove_modifier"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.remove_modifier">[docs]</a>    <span class="k">def</span> <span class="nf">remove_modifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all modifier terms. By default, this includes</span>
+
+<span class="sd">        * ``Mode of inheritance: &#39;HP:0000005&#39;``</span>
+<span class="sd">        * ``Clinical modifier: &#39;HP:0012823&#39;``</span>
+<span class="sd">        * ``Frequency: &#39;HP:0040279&#39;``</span>
+<span class="sd">        * ``Clinical course: &#39;HP:0031797&#39;``</span>
+<span class="sd">        * ``Blood group: &#39;HP:0032223&#39;``</span>
+<span class="sd">        * ``Past medical history: &#39;HP:0032443&#39;``</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOSet</span>
+<span class="sd">            HPOSet instance that contains only</span>
+<span class="sd">            ``Phenotypic abnormality`` HPO terms</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">HPOSet</span><span class="p">([</span>
+            <span class="n">term</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">term</span><span class="o">.</span><span class="n">is_modifier</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="HPOSet.replace_obsolete"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.replace_obsolete">[docs]</a>    <span class="k">def</span> <span class="nf">replace_obsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replaces obsolete terms with the replacement term</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            Not all obsolete terms have a replacement</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose: bool, default: ``False``</span>
+<span class="sd">            Print warnings if an obsolete term does not have a replacement.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOSet</span>
+<span class="sd">            A new HPOSet</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ids</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">is_obsolete</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">replaced</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span>
+                        <span class="n">term</span><span class="o">.</span><span class="n">replaced_by</span>
+                    <span class="p">)</span>
+                    <span class="n">ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">replaced</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;The term </span><span class="si">{}</span><span class="s1"> is obsolete and has no replacement.&#39;</span>
+                            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">term</span><span class="p">),</span>
+                        <span class="ne">UserWarning</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HPOSet</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HPOSet.all_genes"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.all_genes">[docs]</a>    <span class="k">def</span> <span class="nf">all_genes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.GeneSingleton&#39;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the union of the genes</span>
+<span class="sd">        attached to the HPO Terms in this set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set of :class:`annotations.Gene`</span>
+<span class="sd">            Set of all genes associated with the HPOTerms in the set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">genes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">genes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">genes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">genes</span></div>
+
+<div class="viewcode-block" id="HPOSet.omim_diseases"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.omim_diseases">[docs]</a>    <span class="k">def</span> <span class="nf">omim_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.OmimDisease&#39;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the union of the Omim diseases</span>
+<span class="sd">        attached to the HPO Terms in this set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set of :class:`annotations.Omim`</span>
+<span class="sd">            Set of all Omim diseases associated with the HPOTerms in the set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">omims</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">omims</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">omims</span></div>
+
+    <span class="k">def</span> <span class="nf">orpha_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.OrphaDisease&#39;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the union of the Omim diseases</span>
+<span class="sd">        attached to the HPO Terms in this set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set of :class:`annotations.Omim`</span>
+<span class="sd">            Set of all Omim diseases associated with the HPOTerms in the set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">orphas</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">orphas</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">orphas</span>
+
+    <span class="k">def</span> <span class="nf">decipher_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DecipherDisease&#39;</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the union of the Omim diseases</span>
+<span class="sd">        attached to the HPO Terms in this set</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        set of :class:`annotations.Omim`</span>
+<span class="sd">            Set of all Omim diseases associated with the HPOTerms in the set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">deciphers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">deciphers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">decipher_diseases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">deciphers</span>
+
+<div class="viewcode-block" id="HPOSet.information_content"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.information_content">[docs]</a>    <span class="k">def</span> <span class="nf">information_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gives back basic information content stats about the</span>
+<span class="sd">        HPOTerms within the set</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kind: str, default: ``omim``</span>
+<span class="sd">            Which kind of information content should be calculated.</span>
+<span class="sd">            Options are [&#39;omim&#39;, &#39;orpha&#39;, &#39;decipher&#39;, &#39;gene&#39;]</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dict with the following items</span>
+
+<span class="sd">            * **mean** - float - Mean information content</span>
+<span class="sd">            * **max** - float - Maximum information content value</span>
+<span class="sd">            * **total** - float - Sum of all information content values</span>
+<span class="sd">            * **all** - list of float -</span>
+<span class="sd">              List with all information content values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">kind</span><span class="p">:</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;omim&#39;</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="n">kind</span><span class="p">]</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">])</span>  <span class="c1"># type: ignore</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">])</span>  <span class="c1"># type: ignore</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="HPOSet.variance"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.variance">[docs]</a>    <span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the distances between all its term-pairs. It also provides</span>
+<span class="sd">        basic calculations for variances among the pairs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple of (int, int, int, list of int)</span>
+<span class="sd">            Tuple with the variance metrices</span>
+
+<span class="sd">            * **float** Average distance between pairs</span>
+<span class="sd">            * **int** Smallest distance between pairs</span>
+<span class="sd">            * **int** Largest distance between pairs</span>
+<span class="sd">            * **list of int** List of all distances between pairs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">combinations_one_way</span><span class="p">():</span>
+            <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_a</span><span class="o">.</span><span class="n">path_to_other</span><span class="p">(</span><span class="n">term_b</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="n">distances</span><span class="p">),</span>
+                <span class="nb">max</span><span class="p">(</span><span class="n">distances</span><span class="p">),</span>
+                <span class="n">distances</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[])</span></div>
+
+<div class="viewcode-block" id="HPOSet.combinations"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.combinations">[docs]</a>    <span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span>
+        <span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+    <span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper generator function that returns all possible two-pair</span>
+<span class="sd">        combination between all its terms</span>
+
+<span class="sd">        This function is direction dependent. That means that every</span>
+<span class="sd">        pair will appear twice. Once for each direction</span>
+
+<span class="sd">        .. seealso:: :func:`pyhpo.set.HPOSet.combinations_one_way`</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Tuple of :class:`term.HPOTerm`</span>
+<span class="sd">            Tuple containing the follow items</span>
+
+<span class="sd">            * **HPOTerm** instance 1 of the pair</span>
+<span class="sd">            * **HPOTerm** instance 2 of the pair</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            ::</span>
+
+<span class="sd">                ci = HPOSet([term1, term2, term3])</span>
+<span class="sd">                ci.combinations()</span>
+
+<span class="sd">                # Output:</span>
+<span class="sd">                [</span>
+<span class="sd">                    (term1, term2),</span>
+<span class="sd">                    (term1, term3),</span>
+<span class="sd">                    (term2, term1),</span>
+<span class="sd">                    (term2, term3),</span>
+<span class="sd">                    (term3, term1),</span>
+<span class="sd">                    (term3, term2)</span>
+<span class="sd">                ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">term_a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">term_b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">term_a</span> <span class="o">==</span> <span class="n">term_b</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HPOSet.combinations_one_way"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.combinations_one_way">[docs]</a>    <span class="k">def</span> <span class="nf">combinations_one_way</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span>
+        <span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+    <span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper generator function that returns all possible two-pair</span>
+<span class="sd">        combination between all its terms</span>
+
+<span class="sd">        This methow will report each pair only once</span>
+
+<span class="sd">        .. seealso:: :func:`pyhpo.set.HPOSet.combinations`</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Tuple of :class:`term.HPOTerm`</span>
+<span class="sd">            Tuple containing the follow items</span>
+
+<span class="sd">            * **HPOTerm** instance 1 of the pair</span>
+<span class="sd">            * **HPOTerm** instance 2 of the pair</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            ::</span>
+
+<span class="sd">                ci = HPOSet([term1, term2, term3])</span>
+<span class="sd">                ci.combinations()</span>
+
+<span class="sd">                # Output:</span>
+<span class="sd">                [</span>
+<span class="sd">                    (term1, term2),</span>
+<span class="sd">                    (term1, term3),</span>
+<span class="sd">                    (term2, term3)</span>
+<span class="sd">                ]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">term_a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">term_b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">yield</span> <span class="p">(</span><span class="n">term_a</span><span class="p">,</span> <span class="n">term_b</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HPOSet.similarity"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.similarity">[docs]</a>    <span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">,</span>
+        <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">combine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;funSimAvg&#39;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the similarity to another HPOSet</span>
+<span class="sd">        According to Robinson et al, American Journal of Human Genetics, (2008)</span>
+<span class="sd">        and Pesquita et al, BMC Bioinformatics, (2008)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other: HPOSet</span>
+<span class="sd">            Another HPOSet to measure the similarity to</span>
+
+<span class="sd">        kind: str, default ``&#39;&#39;``</span>
+<span class="sd">            Which kind of information content should be calculated.</span>
+<span class="sd">            Options are [&#39;omim&#39;, &#39;orpha&#39;, &#39;decipher&#39;, &#39;gene&#39;]</span>
+<span class="sd">            See :func:`pyhpo.HPOTerm.similarity_score` for options</span>
+
+<span class="sd">        method: string, default ``&#39;&#39;``</span>
+<span class="sd">            The method to use to calculate the similarity.</span>
+<span class="sd">            See :func:`pyhpo.HPOTerm.similarity_score` for options</span>
+
+<span class="sd">            Additional options:</span>
+
+<span class="sd">            * **equal** - Calculates exact matches between both sets</span>
+
+<span class="sd">        combine: string, default ``funSimAvg``</span>
+<span class="sd">            The method to combine similarity measures.</span>
+
+<span class="sd">            Available options:</span>
+
+<span class="sd">            * **funSimAvg** - Schlicker A, BMC Bioinformatics, (2006)</span>
+<span class="sd">            * **funSimMax** - Schlicker A, BMC Bioinformatics, (2006)</span>
+<span class="sd">            * **BMA** - Deng Y, et. al., PLoS One, (2015)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The similarity score to the other HPOSet</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;equal&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_equality_score</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="n">score_matrix</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">_sim_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="n">row_maxes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">score_matrix</span><span class="o">.</span><span class="n">rows</span>
+        <span class="p">]</span>
+
+        <span class="n">col_maxes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">col</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">score_matrix</span><span class="o">.</span><span class="n">columns</span>
+        <span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">combine</span> <span class="o">==</span> <span class="s1">&#39;funSimAvg&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">)</span> <span class="o">+</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">combine</span> <span class="o">==</span> <span class="s1">&#39;funSimMax&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">max</span><span class="p">([</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">),</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">)</span>
+                <span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">combine</span> <span class="o">==</span> <span class="s1">&#39;BMA&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">)</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">))</span> <span class="o">/</span>
+                    <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_maxes</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_maxes</span><span class="p">))</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Invalid combine method specified&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_equality_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an equality similarity score.</span>
+<span class="sd">        Only exact matches between both sets are counted</span>
+<span class="sd">        and the fraction of exact matches is returned.</span>
+<span class="sd">        A score of 1 means both sets match 100%,</span>
+<span class="sd">        0.5 means only half the terms have an exact match.</span>
+
+<span class="sd">        This method does not take advantage of the ontology</span>
+<span class="sd">        and does not take distance measures into account.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other: HPOSet</span>
+<span class="sd">            Another HPOSet to measure the similarity to</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The similarity score to the other HPOSet</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">matches</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">term1</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">term2</span> <span class="ow">in</span> <span class="n">other</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">term1</span> <span class="o">==</span> <span class="n">term2</span><span class="p">:</span>
+                    <span class="n">matches</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">matches</span> <span class="o">/</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_sim_score</span><span class="p">(</span>
+        <span class="n">set1</span><span class="p">:</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">,</span>
+        <span class="n">set2</span><span class="p">:</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">,</span>
+        <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Matrix</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates similarity matrix between HPOSets</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">           This method should not be used by itself.</span>
+<span class="sd">           Use :func:`pyhpo.set.HPOSet.similarity` instead.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        set1: HPOSet</span>
+<span class="sd">            One HPOSet to measure the similarity from</span>
+<span class="sd">        set2: HPOSet</span>
+<span class="sd">            Another HPOSet to measure the similarity to</span>
+
+<span class="sd">        kind: str</span>
+<span class="sd">            Which kind of information content should be calculated.</span>
+<span class="sd">            See :function:`pyhpo.HPOTerm.similarity_score` for options</span>
+
+<span class="sd">        method: string</span>
+<span class="sd">            The method to use to calculate the similarity.</span>
+<span class="sd">            See :function:`pyhpo.HPOTerm.similarity_score` for options</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The one-way similarity from one to the other HPOSet</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">set2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Matrix</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">set1_term</span> <span class="ow">in</span> <span class="n">set1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">set2_term</span> <span class="ow">in</span> <span class="n">set2</span><span class="p">:</span>
+                <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">set1_term</span><span class="o">.</span><span class="n">similarity_score</span><span class="p">(</span><span class="n">set2_term</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Matrix</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">set1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">set2</span><span class="p">),</span> <span class="n">scores</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HPOSet.from_queries"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.from_queries">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_queries</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">queries</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds an HPO set by specifying a list of queries to run on the</span>
+<span class="sd">        :class:`pyhpo.ontology.Ontology`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        queries: list of (string or int)</span>
+<span class="sd">            The queries to be run the identify the HPOTerm from the ontology</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`pyhpo.set.HPOSet`</span>
+<span class="sd">            A new HPOset</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            ::</span>
+
+<span class="sd">                ci = HPOSet([</span>
+<span class="sd">                    &#39;Scoliosis&#39;,</span>
+<span class="sd">                    &#39;HP:0001234&#39;,</span>
+<span class="sd">                    12</span>
+<span class="sd">                ])</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">([</span>
+            <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="HPOSet.from_serialized"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.from_serialized">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_serialized</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pickle</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;HPOSet&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Re-Builds an HPO set from a serialized HPOSet object</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pickle: str</span>
+<span class="sd">            The serialized HPOSet object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`pyhpo.set.HPOSet`</span>
+<span class="sd">            A new HPOset</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">            ::</span>
+
+<span class="sd">                ci = HPOSet(ontology, &#39;12+24+66628&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">([</span>
+            <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">query</span><span class="p">))</span> <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">pickle</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="HPOSet.serialize"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a string serialization that can be used to</span>
+<span class="sd">        rebuild the same HPOSet via :func:`pyhpo.set.HPOSet.from_serialized`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A string representation of the HPOSet</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="s1">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HPOSet.toJSON"><a class="viewcode-back" href="../../set.html#pyhpo.set.HPOSet.toJSON">[docs]</a>    <span class="k">def</span> <span class="nf">toJSON</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a JSON-like object of the HPOSet</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose: bool, default ``False``</span>
+<span class="sd">            Include extra properties of the HPOTerm</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            a list of HPOTerm dict objects</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">toJSON</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">])</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.from_serialized(&quot;</span><span class="si">{}</span><span class="s1">&quot;)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BasicHPOSet"><a class="viewcode-back" href="../../set.html#pyhpo.set.BasicHPOSet">[docs]</a><span class="k">class</span> <span class="nc">BasicHPOSet</span><span class="p">(</span><span class="n">HPOSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Child of :class:`.HPOSet` that automatically:</span>
+
+<span class="sd">    * removes parent terms</span>
+<span class="sd">    * removes modifier terms</span>
+<span class="sd">    * replaces obsolete terms</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">HPOSet</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overwrites ``set.add`` to ensure we keep the</span>
+<span class="sd">        ``self._list`` property updated and</span>
+<span class="sd">        don&#39;t add modifiers, obsolete or parent terms</span>
+<span class="sd">        as well</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_modifier</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">parent_of</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">all_parents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="nb">set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Jonas Marcello.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

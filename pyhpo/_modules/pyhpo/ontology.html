@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pyhpo.ontology &mdash; PyHPO 2.7.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.7.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ontology.html">Ontology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../set.html">HPOSet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Handling master data</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyhpo.ontology</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyhpo.ontology</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>  <span class="c1"># type: ignore</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s1">&#39;Some functionality requires pandas, which is currently not available&#39;</span><span class="p">,</span>
+        <span class="ne">UserWarning</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pyhpo</span>
+<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">HPOTerm</span>
+<span class="kn">from</span> <span class="nn">pyhpo.annotations</span> <span class="kn">import</span> <span class="n">HPO_Gene</span><span class="p">,</span> <span class="n">parse_pheno_file</span>
+
+
+<div class="viewcode-block" id="OntologyClass"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass">[docs]</a><span class="k">class</span> <span class="nc">OntologyClass</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A linked and indexed list of interconnected :class:`HPOTerm` s.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    genes: set</span>
+<span class="sd">        Set of all genes associated with the HPOTerms</span>
+<span class="sd">    omim_diseases: set</span>
+<span class="sd">        Set of all OMIM-diseases associated with the HPOTerms</span>
+<span class="sd">    omim_excluded_diseases: set</span>
+<span class="sd">        Set of all excluded OMIM-diseases associated with the HPOTerms</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hp.obo&#39;</span><span class="p">,</span>
+        <span class="n">data_folder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;OntologyClass&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">HPOTerm</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_genes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.GeneSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_omim_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_omim_excluded_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_excluded_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_excluded_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">data_folder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_folder</span> <span class="o">=</span> <span class="n">data_folder</span>
+
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">data_folder</span><span class="p">,</span>
+                <span class="n">filename</span>
+            <span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">add_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s1">&#39;The method `ontology.add_annotations` is deprecated. &#39;</span>
+            <span class="s1">&#39;The functionality is included by default when the Ontology &#39;</span>
+            <span class="s1">&#39;is loaded from file since version 1.1.&#39;</span><span class="p">,</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
+            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add secondary annotations to each HPO Term.</span>
+<span class="sd">        They currently include:</span>
+<span class="sd">        - Genes</span>
+<span class="sd">        - OMIIM diseases</span>
+<span class="sd">        - excluded OMIM diseases</span>
+
+<span class="sd">        It only works with properly named annotation files</span>
+<span class="sd">        from the HPO source</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_folder: str, default ``None``</span>
+<span class="sd">            Path to location where annotation files are stored</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">data_folder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_folder</span>
+
+        <span class="n">genes</span> <span class="o">=</span> <span class="n">HPO_Gene</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">data_folder</span><span class="p">)</span>
+        <span class="n">phenotypes</span> <span class="o">=</span> <span class="n">parse_pheno_file</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">data_folder</span><span class="p">)</span>
+        <span class="n">omim_diseases</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">omim_excluded</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">orpha_diseases</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">orpha_excluded</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">decipher_diseases</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">decipher_excluded</span> <span class="o">=</span> <span class="n">phenotypes</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">genes</span> <span class="o">=</span> <span class="n">genes</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_genes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">genes</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">omim_diseases</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span> <span class="o">=</span> <span class="n">omim_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_omim_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">omim_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">orpha_diseases</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">orpha_diseases</span> <span class="o">=</span> <span class="n">orpha_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">orpha_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">decipher_diseases</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">decipher_diseases</span> <span class="o">=</span> <span class="n">decipher_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">decipher_diseases</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">omim_excluded</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">omim_excluded_diseases</span> <span class="o">=</span> <span class="n">omim_excluded</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_omim_excluded_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">omim_excluded</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">orpha_excluded</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">orpha_excluded_diseases</span> <span class="o">=</span> <span class="n">orpha_excluded</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_excluded_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">orpha_excluded</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">term</span><span class="o">.</span><span class="n">_index</span> <span class="ow">in</span> <span class="n">decipher_excluded</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">decipher_excluded_diseases</span> <span class="o">=</span> <span class="n">decipher_excluded</span><span class="p">[</span>
+                    <span class="n">term</span><span class="o">.</span><span class="n">_index</span>
+                <span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_excluded_diseases</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">decipher_excluded</span><span class="p">[</span><span class="n">term</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_information_content</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_add_information_content</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the information content for each HPO Term</span>
+<span class="sd">        According to Robinson et al, American Journal of Human Genetics, 2008</span>
+<span class="sd">        https://www.sciencedirect.com/science/article/pii/S0002929708005351</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_omim_diseases</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">)</span>
+        <span class="n">total_orpha_diseases</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">)</span>
+        <span class="n">total_decipher_diseases</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decipher_diseases</span><span class="p">)</span>
+        <span class="n">total_genes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">p_omim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">)</span><span class="o">/</span><span class="n">total_omim_diseases</span>
+            <span class="n">p_orpha</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">)</span><span class="o">/</span><span class="n">total_orpha_diseases</span>
+            <span class="n">p_decipher</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">decipher_diseases</span><span class="p">)</span><span class="o">/</span><span class="n">total_decipher_diseases</span>
+            <span class="n">p_gene</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">genes</span><span class="p">)</span><span class="o">/</span><span class="n">total_genes</span>
+            <span class="k">if</span> <span class="n">p_omim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;omim&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;omim&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_omim</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">p_orpha</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;orpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;orpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_orpha</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">p_decipher</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;decipher&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;decipher&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_decipher</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">p_gene</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;gene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;gene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_gene</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OntologyClass.get_hpo_object"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.get_hpo_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_hpo_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">HPOTerm</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Matches a single HPO term based on its name, synonym or id</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query: str or int</span>
+
+<span class="sd">            * **str** HPO term ``Scoliosis``</span>
+<span class="sd">            * **str** synonym ``Curved spine``</span>
+<span class="sd">            * **str** HPO-ID ``HP:0002650``</span>
+<span class="sd">            * **int** HPO term id ``2650``</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOTerm</span>
+<span class="sd">            A single matching HPO term instance</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            ::</span>
+
+<span class="sd">                # Search by ID (int)</span>
+<span class="sd">                &gt;&gt;&gt; ontology.get_hpo_object(3)</span>
+<span class="sd">                HP:0000003 | Multicystic kidney dysplasia</span>
+
+<span class="sd">                # Search by HPO-ID (string)</span>
+<span class="sd">                &gt;&gt;&gt; ontology.get_hpo_object(&#39;HP:0000003&#39;)</span>
+<span class="sd">                HP:0000003 | Multicystic kidney dysplasia</span>
+
+<span class="sd">                # Search by term (string)</span>
+<span class="sd">                &gt;&gt;&gt; ontology.get_hpo_object(&#39;Multicystic kidney dysplasia&#39;)</span>
+<span class="sd">                HP:0000003 | Multicystic kidney dysplasia</span>
+
+<span class="sd">                # Search by synonym (string)</span>
+<span class="sd">                &gt;&gt;&gt; ontology.get_hpo_object(&#39;Multicystic renal dysplasia&#39;)</span>
+<span class="sd">                HP:0000003 | Multicystic kidney dysplasia</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HPOTerm</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;HP:&#39;</span><span class="p">):</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">HPOTerm</span><span class="o">.</span><span class="n">id_from_string</span><span class="p">(</span><span class="n">query</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonym_match</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">query</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;Invalid type </span><span class="si">{}</span><span class="s1"> for parameter &quot;query&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+            <span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Unknown HPO term&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OntologyClass.match"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.match">[docs]</a>    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HPOTerm</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Matches a single HPO term based on its name</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query: str</span>
+<span class="sd">            HPO term to match</span>
+<span class="sd">            e.g: Abnormality of the nervous system</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOTerm</span>
+<span class="sd">            A single matching HPO term instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">term</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No HPO entry with name </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="OntologyClass.path"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">query2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">HPOTerm</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the shortest connection between</span>
+<span class="sd">        two HPO terms</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query1: str or int</span>
+<span class="sd">            HPO term 1, synonym or HPO-ID (HP:00001) to match</span>
+<span class="sd">            HPO term id (Integer based)</span>
+<span class="sd">            e.g: Abnormality of the nervous system</span>
+<span class="sd">        query2: str or int</span>
+<span class="sd">            HPO term 2, synonym or HPO-ID (HP:00001) to match</span>
+<span class="sd">            HPO term id (Integer based)</span>
+<span class="sd">            e.g: Abnormality of the nervous system</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Length of path</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Tuple of HPOTerms in the path</span>
+<span class="sd">        int</span>
+<span class="sd">            Number of steps from term-1 to the common parent</span>
+<span class="sd">        int</span>
+<span class="sd">            Number of steps from term-2 to the common parent</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">term1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="n">query1</span><span class="p">)</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="n">query2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">term1</span><span class="o">.</span><span class="n">path_to_other</span><span class="p">(</span><span class="n">term2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OntologyClass.search"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">HPOTerm</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterator function for substring search</span>
+<span class="sd">        for terms and synonyms in the ontology</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query:  str</span>
+<span class="sd">            Term to search for</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        HPOTerm</span>
+<span class="sd">            Every matching HPO term instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonym_search</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">term</span></div>
+
+<div class="viewcode-block" id="OntologyClass.synonym_match"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.synonym_match">[docs]</a>    <span class="k">def</span> <span class="nf">synonym_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HPOTerm</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches for actual and synonym term matches</span>
+<span class="sd">        If a match is found in any term, that one is returned</span>
+<span class="sd">        If no actual match is found, the first match</span>
+<span class="sd">        with synonyms is considered</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query:  str</span>
+<span class="sd">            Term to search for</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HPOTerm</span>
+<span class="sd">            A single HPO term instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">synonym_hit</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">term</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">synonym_hit</span> <span class="ow">and</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">synonym</span><span class="p">:</span>
+                <span class="n">synonym_hit</span> <span class="o">=</span> <span class="n">term</span>
+
+        <span class="k">if</span> <span class="n">synonym_hit</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">synonym_hit</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No HPO entry with term or synonym </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">query</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OntologyClass.synonym_search"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.synonym_search">[docs]</a>    <span class="k">def</span> <span class="nf">synonym_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="n">HPOTerm</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Indicates whether a term has a synonym that contains the query.</span>
+<span class="sd">        Substring search in synonym</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        term:  HPOTerm</span>
+<span class="sd">            Term to check</span>
+<span class="sd">        query:  str</span>
+<span class="sd">            Synonym substring</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            Indicates if ``term`` contains ``query`` as a synonym</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">synonym</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">synonym</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">synonym</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="OntologyClass.to_dataframe"><a class="viewcode-back" href="../../ontology.html#pyhpo.ontology.OntologyClass.to_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;pd.DataFrame&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a Pandas DataFrame from the most important features</span>
+
+<span class="sd">        Each HPO term is one row, the features are present in columns</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`DataFrame`</span>
+<span class="sd">            The DataFrame of HPO-Terms and their</span>
+<span class="sd">            attributes in the following columns</span>
+
+<span class="sd">            * **id** ``str`` The HPO Term ID &quot;HP:0000003&quot; (used as index)</span>
+<span class="sd">            * **name** ``str`` The HPO Term name &quot;Multicystic kidney dysplasia&quot;</span>
+<span class="sd">            * **parents** ``str`` Concatenated list of direct parents of</span>
+<span class="sd">              HPO terms. Separated by ``|``</span>
+<span class="sd">            * **children** ``str`` Concatenated list of direct children of</span>
+<span class="sd">              HPO terms. Separated by ``|``</span>
+<span class="sd">            * **ic_omim** ``float`` Information-content</span>
+<span class="sd">              (based on associated OMIM diseases)</span>
+<span class="sd">            * **ic_gene** ``float`` Information-content</span>
+<span class="sd">              (based on associated genes)</span>
+<span class="sd">            * **dTop_l** ``int`` Maximum distance to root term</span>
+<span class="sd">              (via :func:`pyhpo.term.longest_path_to_root`)</span>
+<span class="sd">            * **dTop_s** ``int`` Shortest distance to root term</span>
+<span class="sd">              (via :func:`pyhpo.term.shortest_path_to_root`)</span>
+<span class="sd">            * **dBottom** ``int`` Longest graph of children nodes</span>
+<span class="sd">              (via :func:`pyhpo.term.longest_path_to_bottom`)</span>
+<span class="sd">            * **genes** ``str`` Concatenated list of associated</span>
+<span class="sd">              genes. Separated by ``|``</span>
+<span class="sd">            * **diseases** ``str`` Concatenated list of associated</span>
+<span class="sd">              OMIM diseases. Separated by ``|``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;parents&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;children&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ic_omim&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ic_orpha&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ic_decipher&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;ic_gene&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;dTop_l&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;dTop_s&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;dBottom&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;genes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;orpha&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;decipher&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+
+        <span class="c1"># This is not the most elegant way to generate a DataFrame</span>
+        <span class="c1"># But it works</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;parents&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parents</span><span class="p">]))</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;children&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">children</span><span class="p">]))</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ic_omim&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;omim&#39;</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ic_orpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;orpha&#39;</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ic_decipher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;decipher&#39;</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ic_gene&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;gene&#39;</span><span class="p">])</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dTop_l&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">longest_path_to_root</span><span class="p">())</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dTop_s&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">shortest_path_to_root</span><span class="p">())</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dBottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">longest_path_to_bottom</span><span class="p">())</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;genes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">genes</span><span class="p">]))</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;omim&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span>
+            <span class="p">]))</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;orpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span>
+            <span class="p">]))</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;decipher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span>
+            <span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">genes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.GeneSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genes</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">omim_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_omim_diseases</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">omim_excluded_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_omim_excluded_diseases</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">orpha_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_diseases</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">orpha_excluded_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orpha_excluded_diseases</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">decipher_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_diseases</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">decipher_excluded_diseases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;pyhpo.DiseaseSingleton&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decipher_excluded_diseases</span>
+
+    <span class="k">def</span> <span class="nf">_append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">HPOTerm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds one HPO term to the ontology</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">_connect_all</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Connects all parent-child associations in the Ontology</span>
+<span class="sd">        Called by default after loading the ontology from a file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parent_ids</span><span class="p">():</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span>  <span class="c1"># type: ignore[assignment]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">term</span>  <span class="c1"># type: ignore[assignment]</span>
+
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="c1"># Build caches of hierarchy to speed</span>
+            <span class="c1"># up performance</span>
+            <span class="n">term</span><span class="o">.</span><span class="n">all_parents</span>
+
+    <span class="k">def</span> <span class="nf">_load_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads an obo file line by line to add</span>
+<span class="sd">        HPO terms to the Ontology</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename: str</span>
+<span class="sd">            Full path to ``obo`` file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">term</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fh</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;[Term]&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_append</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+                    <span class="n">term</span> <span class="o">=</span> <span class="n">HPOTerm</span><span class="p">()</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">term</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">term</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">term</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_append</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connect_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_annotations</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HPOTerm</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">HPOTerm</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+<span class="n">Ontology</span> <span class="o">=</span> <span class="n">OntologyClass</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Jonas Marcello.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Ontology &mdash; PyHPO 2.7.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Annotations" href="annotations.html" />
+    <link rel="prev" title="HPOTerm" href="hpoterm.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.7.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ontology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ontology-class"><code class="docutils literal notranslate"><span class="pre">Ontology</span></code> class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-hpo-object">get_hpo_object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#match">match</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#path">path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search">search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#synonym-match">synonym_match</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#synonym-search">synonym_search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-dataframe">to_dataframe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Ontology</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ontology.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ontology">
+<h1>Ontology<a class="headerlink" href="#ontology" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ontology</span></code> contains all <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> s and thus reflects the full ontology including links and information about inheritance</p>
+<div class="section" id="ontology-class">
+<h2><code class="docutils literal notranslate"><span class="pre">Ontology</span></code> class<a class="headerlink" href="#ontology-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pyhpo.ontology.OntologyClass">
+<em class="property">class </em><code class="sig-prename descclassname">pyhpo.ontology.</code><code class="sig-name descname">OntologyClass</code><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>A linked and indexed list of interconnected <code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code> s.</p>
+<dl class="py attribute">
+<dt id="pyhpo.ontology.OntologyClass.genes">
+<code class="sig-name descname">genes</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.genes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of all genes associated with the HPOTerms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyhpo.ontology.OntologyClass.omim_diseases">
+<code class="sig-name descname">omim_diseases</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_diseases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of all OMIM-diseases associated with the HPOTerms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pyhpo.ontology.OntologyClass.omim_excluded_diseases">
+<code class="sig-name descname">omim_excluded_diseases</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_excluded_diseases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of all excluded OMIM-diseases associated with the HPOTerms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="get-hpo-object">
+<h3>get_hpo_object<a class="headerlink" href="#get-hpo-object" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.get_hpo_object">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">get_hpo_object</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.get_hpo_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.get_hpo_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matches a single HPO term based on its name, synonym or id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em><em> or </em><em>int</em>) – <ul class="simple">
+<li><p><strong>str</strong> HPO term <code class="docutils literal notranslate"><span class="pre">Scoliosis</span></code></p></li>
+<li><p><strong>str</strong> synonym <code class="docutils literal notranslate"><span class="pre">Curved</span> <span class="pre">spine</span></code></p></li>
+<li><p><strong>str</strong> HPO-ID <code class="docutils literal notranslate"><span class="pre">HP:0002650</span></code></p></li>
+<li><p><strong>int</strong> HPO term id <code class="docutils literal notranslate"><span class="pre">2650</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A single matching HPO term instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">HPOTerm</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search by ID (int)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">HP</span><span class="p">:</span><span class="mi">0000003</span> <span class="o">|</span> <span class="n">Multicystic</span> <span class="n">kidney</span> <span class="n">dysplasia</span>
+
+<span class="c1"># Search by HPO-ID (string)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;HP:0000003&#39;</span><span class="p">)</span>
+<span class="n">HP</span><span class="p">:</span><span class="mi">0000003</span> <span class="o">|</span> <span class="n">Multicystic</span> <span class="n">kidney</span> <span class="n">dysplasia</span>
+
+<span class="c1"># Search by term (string)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Multicystic kidney dysplasia&#39;</span><span class="p">)</span>
+<span class="n">HP</span><span class="p">:</span><span class="mi">0000003</span> <span class="o">|</span> <span class="n">Multicystic</span> <span class="n">kidney</span> <span class="n">dysplasia</span>
+
+<span class="c1"># Search by synonym (string)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Multicystic renal dysplasia&#39;</span><span class="p">)</span>
+<span class="n">HP</span><span class="p">:</span><span class="mi">0000003</span> <span class="o">|</span> <span class="n">Multicystic</span> <span class="n">kidney</span> <span class="n">dysplasia</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="match">
+<h3>match<a class="headerlink" href="#match" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.match">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matches a single HPO term based on its name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – HPO term to match
+e.g: Abnormality of the nervous system</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A single matching HPO term instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">HPOTerm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="path">
+<h3>path<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.path">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query1</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">query2</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>int<span class="p">, </span>Tuple<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">, </span><span class="p">…</span><span class="p">]</span><span class="p">, </span>int<span class="p">, </span>int<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shortest connection between
+two HPO terms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query1</strong> (<em>str</em><em> or </em><em>int</em>) – HPO term 1, synonym or HPO-ID (HP:00001) to match
+HPO term id (Integer based)
+e.g: Abnormality of the nervous system</p></li>
+<li><p><strong>query2</strong> (<em>str</em><em> or </em><em>int</em>) – HPO term 2, synonym or HPO-ID (HP:00001) to match
+HPO term id (Integer based)
+e.g: Abnormality of the nervous system</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>int</em> – Length of path</p></li>
+<li><p><em>tuple</em> – Tuple of HPOTerms in the path</p></li>
+<li><p><em>int</em> – Number of steps from term-1 to the common parent</p></li>
+<li><p><em>int</em> – Number of steps from term-2 to the common parent</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="search">
+<h3>search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.search">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator function for substring search
+for terms and synonyms in the ontology</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – Term to search for</p>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><p><em>HPOTerm</em> – Every matching HPO term instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="synonym-match">
+<h3>synonym_match<a class="headerlink" href="#synonym-match" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.synonym_match">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">synonym_match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches for actual and synonym term matches
+If a match is found in any term, that one is returned
+If no actual match is found, the first match
+with synonyms is considered</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – Term to search for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A single HPO term instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">HPOTerm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="synonym-search">
+<h3>synonym_search<a class="headerlink" href="#synonym-search" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.synonym_search">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">synonym_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">term</span><span class="p">:</span> <span class="n"><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a></span></em>, <em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether a term has a synonym that contains the query.
+Substring search in synonym</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><em>HPOTerm</em></a>) – Term to check</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Synonym substring</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Indicates if <code class="docutils literal notranslate"><span class="pre">term</span></code> contains <code class="docutils literal notranslate"><span class="pre">query</span></code> as a synonym</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="to-dataframe">
+<h3>to_dataframe<a class="headerlink" href="#to-dataframe" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.ontology.OntologyClass.to_dataframe">
+<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">to_dataframe</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pd.DataFrame<a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.to_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pandas DataFrame from the most important features</p>
+<p>Each HPO term is one row, the features are present in columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>The DataFrame of HPO-Terms and their
+attributes in the following columns</p>
+<ul class="simple">
+<li><p><strong>id</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> The HPO Term ID “HP:0000003” (used as index)</p></li>
+<li><p><strong>name</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> The HPO Term name “Multicystic kidney dysplasia”</p></li>
+<li><p><strong>parents</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> Concatenated list of direct parents of
+HPO terms. Separated by <code class="docutils literal notranslate"><span class="pre">|</span></code></p></li>
+<li><p><strong>children</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> Concatenated list of direct children of
+HPO terms. Separated by <code class="docutils literal notranslate"><span class="pre">|</span></code></p></li>
+<li><p><strong>ic_omim</strong> <code class="docutils literal notranslate"><span class="pre">float</span></code> Information-content
+(based on associated OMIM diseases)</p></li>
+<li><p><strong>ic_gene</strong> <code class="docutils literal notranslate"><span class="pre">float</span></code> Information-content
+(based on associated genes)</p></li>
+<li><p><strong>dTop_l</strong> <code class="docutils literal notranslate"><span class="pre">int</span></code> Maximum distance to root term
+(via <code class="xref py py-func docutils literal notranslate"><span class="pre">pyhpo.term.longest_path_to_root()</span></code>)</p></li>
+<li><p><strong>dTop_s</strong> <code class="docutils literal notranslate"><span class="pre">int</span></code> Shortest distance to root term
+(via <code class="xref py py-func docutils literal notranslate"><span class="pre">pyhpo.term.shortest_path_to_root()</span></code>)</p></li>
+<li><p><strong>dBottom</strong> <code class="docutils literal notranslate"><span class="pre">int</span></code> Longest graph of children nodes
+(via <code class="xref py py-func docutils literal notranslate"><span class="pre">pyhpo.term.longest_path_to_bottom()</span></code>)</p></li>
+<li><p><strong>genes</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> Concatenated list of associated
+genes. Separated by <code class="docutils literal notranslate"><span class="pre">|</span></code></p></li>
+<li><p><strong>diseases</strong> <code class="docutils literal notranslate"><span class="pre">str</span></code> Concatenated list of associated
+OMIM diseases. Separated by <code class="docutils literal notranslate"><span class="pre">|</span></code></p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="annotations.html" class="btn btn-neutral float-right" title="Annotations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="hpoterm.html" class="btn btn-neutral float-left" title="HPOTerm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Jonas Marcello.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

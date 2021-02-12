@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Statistics &mdash; PyHPO 2.7.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Matrix" href="matrix.html" />
+    <link rel="prev" title="HPOSet" href="set.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.7.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ontology.html">Ontology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Statistics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hpoenrichment-class"><code class="docutils literal notranslate"><span class="pre">HPOEnrichment</span></code> class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enrichment">enrichment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#enrichmentmodel-class"><code class="docutils literal notranslate"><span class="pre">EnrichmentModel</span></code> class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">enrichment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Statistics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/stats.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="statistics">
+<h1>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h1>
+<p>This module provides helper function for statistical analysis of HPOSet or annotations.</p>
+<div class="section" id="hpoenrichment-class">
+<h2><code class="docutils literal notranslate"><span class="pre">HPOEnrichment</span></code> class<a class="headerlink" href="#hpoenrichment-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pyhpo.stats.HPOEnrichment">
+<em class="property">class </em><code class="sig-prename descclassname">pyhpo.stats.</code><code class="sig-name descname">HPOEnrichment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/stats.html#HPOEnrichment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.stats.HPOEnrichment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the enrichment of HPO Terms in an Annotation set.</p>
+<p>You can use this class for the following example use cases:</p>
+<ul class="simple">
+<li><p>You have a list of genes and want to see if some HPO terms are
+enriched in that group. (e.g. RNAseq differential gene expression)</p></li>
+<li><p>You have a list of OMIM diseases and want to see if they have
+some underlying HPO symptom.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>category</strong> (<em>str</em>) – <p>String to declare if enrichment is done for genes or for OMIM diseases</p>
+<p>Options are:</p>
+<ul class="simple">
+<li><p><strong>gene</strong></p></li>
+<li><p><strong>omim</strong></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="enrichment">
+<h3>enrichment<a class="headerlink" href="#enrichment" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.stats.HPOEnrichment.enrichment">
+<code class="sig-prename descclassname">HPOEnrichment.</code><code class="sig-name descname">enrichment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">annotation_sets</span><span class="p">:</span> <span class="n">List<span class="p">[</span>pyhpo.annotations.Annotation<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>dict<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/stats.html#HPOEnrichment.enrichment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.stats.HPOEnrichment.enrichment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the enrichment of HPO terms in the provided annotation set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>str</em>) – <p>The statistical test for enrichment</p>
+<ul>
+<li><p><strong>hypergeom</strong> Hypergeometric distribution test</p></li>
+</ul>
+</p></li>
+<li><p><strong>annotation_sets</strong> (list of <code class="docutils literal notranslate"><span class="pre">annoation</span></code>) – Every <code class="docutils literal notranslate"><span class="pre">annotation</span></code> item in the list must have an attribute
+<code class="docutils literal notranslate"><span class="pre">hpos</span></code>, being a list of HPO-Term indicies</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The enrichment of every HPO term in the <code class="docutils literal notranslate"><span class="pre">annotation_sets</span></code> list,
+sorted by descending enrichment. Every dict has the following keys:</p>
+<ul class="simple">
+<li><p><strong>hpo</strong>: <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a></p></li>
+<li><p><strong>count</strong>: Number of appearances in the sets</p></li>
+<li><p><strong>enrichment</strong>: Enrichment score</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="enrichmentmodel-class">
+<h2><code class="docutils literal notranslate"><span class="pre">EnrichmentModel</span></code> class<a class="headerlink" href="#enrichmentmodel-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pyhpo.stats.EnrichmentModel">
+<em class="property">class </em><code class="sig-prename descclassname">pyhpo.stats.</code><code class="sig-name descname">EnrichmentModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/stats.html#EnrichmentModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.stats.EnrichmentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the enrichment of annotations in an <a class="reference internal" href="set.html#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOSet</span></code></a>.</p>
+<p>You can use this class for the following example use cases:</p>
+<ul class="simple">
+<li><p>You have a set of HPOTerms and want to find the
+most likely causative gene</p></li>
+<li><p>You have a set of HPOTerms and want to find the underlying disease</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>category</strong> (<em>str</em>) – <p>String to declare if enrichment is done for genes or for OMIM diseases</p>
+<p>Options are:</p>
+<ul class="simple">
+<li><p><strong>gene</strong></p></li>
+<li><p><strong>omim</strong></p></li>
+<li><p><strong>orpha</strong></p></li>
+<li><p><strong>decipher</strong></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="id1">
+<h3>enrichment<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt id="pyhpo.stats.EnrichmentModel.enrichment">
+<code class="sig-prename descclassname">EnrichmentModel.</code><code class="sig-name descname">enrichment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">hposet</span><span class="p">:</span> <span class="n"><a class="reference internal" href="set.html#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>dict<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/stats.html#EnrichmentModel.enrichment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.stats.EnrichmentModel.enrichment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the enrichment of annotations in the provided HPOSet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>str</em>) – <p>The statistical test for enrichment</p>
+<ul>
+<li><p><strong>hypergeom</strong> Hypergeometric distribution test</p></li>
+</ul>
+</p></li>
+<li><p><strong>hposet</strong> (<a class="reference internal" href="set.html#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOSet</span></code></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The enrichment of every annotation item sorted by
+descending enrichment. Every dict has the following keys:</p>
+<ul class="simple">
+<li><p><strong>item</strong>: Gene or OMIM or Decipher annotation item</p></li>
+<li><p><strong>count</strong>: Number of appearances in the sets</p></li>
+<li><p><strong>enrichment</strong>: Enrichment score</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="matrix.html" class="btn btn-neutral float-right" title="Matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="set.html" class="btn btn-neutral float-left" title="HPOSet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Jonas Marcello.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

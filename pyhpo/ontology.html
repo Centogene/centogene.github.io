@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Ontology &mdash; PyHPO 2.7.3 documentation</title>
+  <title>Ontology &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -63,7 +66,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -107,8 +110,10 @@
 <li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
             
@@ -182,12 +187,12 @@
 <div class="section" id="ontology-class">
 <h2><code class="docutils literal notranslate"><span class="pre">Ontology</span></code> class<a class="headerlink" href="#ontology-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pyhpo.ontology.OntologyClass">
-<em class="property">class </em><code class="sig-prename descclassname">pyhpo.ontology.</code><code class="sig-name descname">OntologyClass</code><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.ontology.</span></span><span class="sig-name descname"><span class="pre">OntologyClass</span></span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass" title="Permalink to this definition">¶</a></dt>
 <dd><p>A linked and indexed list of interconnected <code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code> s.</p>
 <dl class="py attribute">
-<dt id="pyhpo.ontology.OntologyClass.genes">
-<code class="sig-name descname">genes</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.genes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.genes">
+<span class="sig-name descname"><span class="pre">genes</span></span><a class="headerlink" href="#pyhpo.ontology.OntologyClass.genes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set of all genes associated with the HPOTerms</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -197,8 +202,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="pyhpo.ontology.OntologyClass.omim_diseases">
-<code class="sig-name descname">omim_diseases</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_diseases" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.omim_diseases">
+<span class="sig-name descname"><span class="pre">omim_diseases</span></span><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_diseases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set of all OMIM-diseases associated with the HPOTerms</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -208,8 +213,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="pyhpo.ontology.OntologyClass.omim_excluded_diseases">
-<code class="sig-name descname">omim_excluded_diseases</code><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_excluded_diseases" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.omim_excluded_diseases">
+<span class="sig-name descname"><span class="pre">omim_excluded_diseases</span></span><a class="headerlink" href="#pyhpo.ontology.OntologyClass.omim_excluded_diseases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set of all excluded OMIM-diseases associated with the HPOTerms</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -223,8 +228,8 @@
 <div class="section" id="get-hpo-object">
 <h3>get_hpo_object<a class="headerlink" href="#get-hpo-object" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.get_hpo_object">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">get_hpo_object</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.get_hpo_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.get_hpo_object" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.get_hpo_object">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">get_hpo_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.get_hpo_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.get_hpo_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matches a single HPO term based on its name, synonym or id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -241,6 +246,15 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">HPOTerm</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – No HPO term is found for the provided query</p></li>
+<li><p><strong>TypeError</strong> – The provided query is an unsupported type and can’t be properly
+    converted</p></li>
+<li><p><strong>ValueError</strong> – The provided HPO ID cannot be converted to the correct
+    integer representation</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Example</p>
@@ -267,8 +281,8 @@
 <div class="section" id="match">
 <h3>match<a class="headerlink" href="#match" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.match">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.match" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.match">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matches a single HPO term based on its name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -288,8 +302,8 @@ e.g: Abnormality of the nervous system</p>
 <div class="section" id="path">
 <h3>path<a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.path">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query1</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">query2</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>int<span class="p">, </span>Tuple<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">, </span><span class="p">…</span><span class="p">]</span><span class="p">, </span>int<span class="p">, </span>int<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.path" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.path">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shortest connection between
 two HPO terms</p>
 <dl class="field-list simple">
@@ -303,8 +317,11 @@ HPO term id (Integer based)
 e.g: Abnormality of the nervous system</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, …], <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
 <li><p><em>int</em> – Length of path</p></li>
 <li><p><em>tuple</em> – Tuple of HPOTerms in the path</p></li>
 <li><p><em>int</em> – Number of steps from term-1 to the common parent</p></li>
@@ -319,8 +336,8 @@ e.g: Abnormality of the nervous system</p></li>
 <div class="section" id="search">
 <h3>search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.search">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.search" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.search">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterator function for substring search
 for terms and synonyms in the ontology</p>
 <dl class="field-list simple">
@@ -330,6 +347,9 @@ for terms and synonyms in the ontology</p>
 <dt class="field-even">Yields</dt>
 <dd class="field-even"><p><em>HPOTerm</em> – Every matching HPO term instance</p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>]</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -337,8 +357,8 @@ for terms and synonyms in the ontology</p>
 <div class="section" id="synonym-match">
 <h3>synonym_match<a class="headerlink" href="#synonym-match" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.synonym_match">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">synonym_match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_match" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.synonym_match">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">synonym_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Searches for actual and synonym term matches
 If a match is found in any term, that one is returned
 If no actual match is found, the first match
@@ -360,8 +380,8 @@ with synonyms is considered</p>
 <div class="section" id="synonym-search">
 <h3>synonym_search<a class="headerlink" href="#synonym-search" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.synonym_search">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">synonym_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">term</span><span class="p">:</span> <span class="n"><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a></span></em>, <em class="sig-param"><span class="n">query</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_search" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.synonym_search">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">synonym_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.synonym_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.synonym_search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Indicates whether a term has a synonym that contains the query.
 Substring search in synonym</p>
 <dl class="field-list simple">
@@ -384,8 +404,8 @@ Substring search in synonym</p>
 <div class="section" id="to-dataframe">
 <h3>to_dataframe<a class="headerlink" href="#to-dataframe" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.ontology.OntologyClass.to_dataframe">
-<code class="sig-prename descclassname">OntologyClass.</code><code class="sig-name descname">to_dataframe</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.to_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.ontology.OntologyClass.to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">OntologyClass.</span></span><span class="sig-name descname"><span class="pre">to_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/ontology.html#OntologyClass.to_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.ontology.OntologyClass.to_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Pandas DataFrame from the most important features</p>
 <p>Each HPO term is one row, the features are present in columns</p>
 <dl class="field-list simple">

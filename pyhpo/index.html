@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Welcome to PyHPO’s documentation! &mdash; PyHPO 2.7.3 documentation</title>
+  <title>Welcome to PyHPO’s documentation! &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -62,7 +65,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -94,8 +97,10 @@
 <li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
             
@@ -173,8 +178,10 @@
 <li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
@@ -186,181 +193,361 @@
 <p>Visit the <a class="reference external" href="https://centogene.github.io/pyhpo/">PyHPO Documentation</a> for a more detailed overview of all the functionality.</p>
 <div class="section" id="main-features">
 <h3>Main features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h3>
-<p>It allows working on individual terms <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code>, a set of terms <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> and the full <code class="docutils literal notranslate"><span class="pre">Ontology</span></code>.</p>
-<p>Internally the ontology is represented as a branched linked list, every term contains pointers to its parent and child terms. This allows fast tree traversal functioanlity.</p>
+<ul class="simple">
+<li><p>Identify patient cohorts based on clinical features</p></li>
+<li><p>Cluster patients or other clinical information for GWAS</p></li>
+<li><p>Phenotype to Genotype studies</p></li>
+<li><p>HPO similarity analysis</p></li>
+<li><p>Graph based analysis of phenotypes, genes and diseases</p></li>
+</ul>
+<p><strong>PyHPO</strong> allows working on individual terms <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code>, a set of terms <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> and the full <code class="docutils literal notranslate"><span class="pre">Ontology</span></code>.</p>
 <p>The library is helpful for discovery of novel gene-disease associations and GWAS data analysis studies. At the same time, it can be used for oragnize clinical information of patients in research or diagnostic settings.</p>
+<p>Internally the ontology is represented as a branched linked list, every term contains pointers to its parent and child terms. This allows fast tree traversal functionality.</p>
 <p>It provides an interface to create <code class="docutils literal notranslate"><span class="pre">Pandas</span> <span class="pre">Dataframe</span></code> from its data, allowing integration in already existing data anlysis tools.</p>
-<div class="section" id="hpoterm">
-<h4>HPOTerm<a class="headerlink" href="#hpoterm" title="Permalink to this headline">¶</a></h4>
-<p>An individual <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> contains all info about itself as well as pointers to its parents and its children. You can access its information-content, calculate similarity scores to other terms, find the shortest or longes connection between two terms. List all associated genes or diseases, etc.</p>
+<div class="section" id="examples">
+<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="how-similar-are-the-phenotypes-of-two-patients">
+<h5>How similar are the phenotypes of two patients<a class="headerlink" href="#how-similar-are-the-phenotypes-of-two-patients" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+
+<span class="c1"># initilize the Ontology ()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+
+<span class="c1"># Declare the clinical information of the patients</span>
+<span class="n">patient_1</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">([</span>
+    <span class="s1">&#39;HP:0002943&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0008458&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0100884&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002944&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002751&#39;</span>
+<span class="p">])</span>
+
+<span class="n">patient_2</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">([</span>
+    <span class="s1">&#39;HP:0002650&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0010674&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0000925&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0009121&#39;</span>
+<span class="p">])</span>
+
+<span class="c1"># and compare their similarity</span>
+<span class="n">patient_1</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">patient_2</span><span class="p">)</span>
+<span class="c1">#&gt; 0.7594183905785477</span>
+</pre></div>
 </div>
-<div class="section" id="hposet">
-<h4>HPOSet<a class="headerlink" href="#hposet" title="Permalink to this headline">¶</a></h4>
-<p>An <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> can be used to represent e.g. a patient’s clinical information. It allows some basic filtering and comparisons to other <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> s.</p>
 </div>
-<div class="section" id="ontology">
-<h4>Ontology<a class="headerlink" href="#ontology" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">Ontology</span></code> represents all HPO terms and their connections and associations. It also contains pointers to associated genes and disease.</p>
+<div class="section" id="how-close-are-two-hpo-terms">
+<h5>How close are two HPO terms<a class="headerlink" href="#how-close-are-two-hpo-terms" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+
+<span class="c1"># initilize the Ontology ()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+
+<span class="n">term_1</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Scoliosis&#39;</span><span class="p">)</span>
+<span class="n">term_2</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Abnormal axial skeleton morphology&#39;</span><span class="p">)</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="n">term_1</span><span class="o">.</span><span class="n">path_to_other</span><span class="p">(</span><span class="n">term_2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">HP:0002650 | Scoliosis</span>
+<span class="sd">HP:0010674 | Abnormality of the curvature of the vertebral column</span>
+<span class="sd">HP:0000925 | Abnormality of the vertebral column</span>
+<span class="sd">HP:0009121 | Abnormal axial skeleton morphology</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="installation-setup">
-<h3>Installation / Setup<a class="headerlink" href="#installation-setup" title="Permalink to this headline">¶</a></h3>
-<p>The easiest way to install PyHPO is via pip</p>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h3>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to install <strong>PyHPO</strong> is via pip</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install pyhpo
+</pre></div>
+</div>
+<p>or, you can additionally install optional packages for extra functionality</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Include pandas during install</span>
+pip install pyhpo<span class="o">[</span>pandas<span class="o">]</span>
+
+<span class="c1"># Include scipy</span>
+pip install pyhpo<span class="o">[</span>scipy<span class="o">]</span>
+
+<span class="c1"># Include all dependencies</span>
+pip install pyhpo<span class="o">[</span>all<span class="o">]</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Some features of PyHPO require <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. The standard installation via pip will not include pandas and PyHPO will work just fine. (You will get a warning on the initial import though). As long as you don’t try to create a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>, everything should work without pandas. If you want to use all features, install <code class="docutils literal notranslate"><span class="pre">pandas</span></code> yourself:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install pandas
-</pre></div>
+<p>Some features of PyHPO require <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. The standard installation via pip will not include pandas or scipy and PyHPO will work just fine. (You will get a warning on the initial import though).</p>
+<p>Without installing <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, you won’t be able to export the Ontology as a <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code>, everything else will work fine.</p>
+<p>Without installing <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, you won’t be able to use the <code class="docutils literal notranslate"><span class="pre">stats</span></code> module, especially the enrichment calculations.</p>
 </div>
 </div>
-</div>
-<div class="section" id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
-<p>For a detailed description of how to use PyHPO, visit the <a class="reference external" href="https://centogene.github.io/pyhpo/">PyHPO Documentation</a>.</p>
-<div class="section" id="getting-started">
-<h4>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo.ontology</span> <span class="kn">import</span> <span class="n">Ontology</span>
+<div class="section" id="usage-example">
+<h3>Usage example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="hpoterm">
+<h4>HPOTerm<a class="headerlink" href="#hpoterm" title="Permalink to this headline">¶</a></h4>
+<p>An <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> contains various metadata about the term, as well as pointers to its parents and children terms. You can access its information-content, calculate similarity scores to other terms, find the shortest or longes connection between two terms. List all associated genes or diseases, etc.</p>
+<div class="section" id="id1">
+<h5>Examples:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
+<p>Basic functionalities of an HPO-Term</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
 
-<span class="c1"># initilize the Ontology (you can specify config parameters if needed here)</span>
+<span class="c1"># initilize the Ontology ()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
 
-<span class="c1"># Iterate through all HPO terms</span>
-<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">Ontology</span><span class="p">:</span>
-    <span class="c1"># do something, e.g.</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>There are multiple ways to retrieve a single term out of an Ontology:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieve a term via its HPO-ID</span>
-<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;HP:0002650&#39;</span><span class="p">)</span>
-
-<span class="c1"># ...or via the Integer representation of the ID</span>
-<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="mi">2650</span><span class="p">)</span>
-
-<span class="c1"># ...or by term name</span>
+<span class="c1"># Retrieve a term e.g. via its HPO-ID</span>
 <span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Scoliosis&#39;</span><span class="p">)</span>
 
-<span class="c1"># ...or via shortcut</span>
-<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">[</span><span class="mi">2650</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>You can also do substring search on term names and synonyms:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ontology.search returns an Iterator over all matches</span>
-<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;Abn&#39;</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Find the shortest path between two terms:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ontology</span><span class="o">.</span><span class="n">path</span><span class="p">(</span>
-    <span class="s1">&#39;Abnormality of the nervous system&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Scoliosis&#39;</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0002650 | Scoliosis</span>
 
-<span class="c1"># or use HP identifiers</span>
-<span class="n">Ontology</span><span class="o">.</span><span class="n">path</span><span class="p">(</span>
-    <span class="s1">&#39;Abnormality of the nervous system&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;HP:0002650&#39;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="working-with-terms">
-<h4>Working with terms<a class="headerlink" href="#working-with-terms" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get a single HPO Term:</span>
-<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;HP:0002650&#39;</span><span class="p">)</span>
-
-<span class="c1"># check the relationship of two terms</span>
-<span class="n">term</span><span class="o">.</span><span class="n">path_to_other</span><span class="p">(</span><span class="n">Ontology</span><span class="p">[</span><span class="mi">11</span><span class="p">])</span>
-
-<span class="c1"># get the information content for OMIM diseases</span>
+<span class="c1"># Get information content from Term &lt;--&gt; Omim associations</span>
 <span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;omim&#39;</span><span class="p">]</span>
+<span class="c1">#&gt; 2.39</span>
 
-<span class="c1"># ...or for genes</span>
-<span class="n">term</span><span class="o">.</span><span class="n">information_content</span><span class="p">[</span><span class="s1">&#39;genes&#39;</span><span class="p">]</span>
+<span class="c1"># Show how many genes are associated to the term</span>
+<span class="c1"># (Note that this includes indirect associations, associations</span>
+<span class="c1"># from children terms to genes.)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">genes</span><span class="p">)</span>
+<span class="c1">#&gt; 947</span>
 
-<span class="c1"># compare two terms</span>
-<span class="n">term</span><span class="o">.</span><span class="n">similarity_score</span><span class="p">(</span><span class="n">term2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;resnik&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;gene&#39;</span><span class="p">)</span>
+<span class="c1"># Show how many Omim Diseases are associated to the term</span>
+<span class="c1"># (Note that this includes indirect associations, associations</span>
+<span class="c1"># from children terms to diseases.)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">)</span>
+<span class="c1">#&gt; 730</span>
+
+<span class="c1"># Get a list of all parent terms</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0010674 | Abnormality of the curvature of the vertebral column</span>
+
+<span class="c1"># Get a list of all children terms</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">HP:0002943 | Thoracic scoliosis</span>
+<span class="sd">HP:0008458 | Progressive congenital scoliosis</span>
+<span class="sd">HP:0100884 | Compensatory scoliosis</span>
+<span class="sd">HP:0002944 | Thoracolumbar scoliosis</span>
+<span class="sd">HP:0002751 | Kyphoscoliosis</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="working-with-sets">
-<h4>Working with sets<a class="headerlink" href="#working-with-sets" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a clinical information set of HPO Terms</span>
-<span class="n">clinical_info</span> <span class="o">=</span> <span class="n">pyhpo</span><span class="o">.</span><span class="n">HPOSet</span><span class="p">([</span>
-    <span class="n">Ontology</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span>
-    <span class="n">Ontology</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span>
-    <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="mi">2650</span><span class="p">)</span>
-<span class="p">])</span>
+<p><em>(This script is complete, it should run “as is”)</em></p>
+<p>Some additional functionality, working with more than one term</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Scoliosis&#39;</span><span class="p">)</span>
 
-<span class="c1"># Extract only child nodes and leave out all parent terms</span>
-<span class="n">children</span> <span class="o">=</span> <span class="n">clinical_info</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">()</span>
+<span class="c1"># Let&#39;s get a second term, this time using it HPO-ID</span>
+<span class="n">term_2</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;HP:0009121&#39;</span><span class="p">)</span>
 
-<span class="c1"># Remove HPO modifier terms</span>
-<span class="n">new_ci</span> <span class="o">=</span> <span class="n">clinical_info</span><span class="o">.</span><span class="n">remove_modifier</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term_2</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0009121 | Abnormal axial skeleton morphology</span>
 
-<span class="c1"># Calculate the similarity of two Sets</span>
-<span class="n">sim_score</span> <span class="o">=</span> <span class="n">clinical_info</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">other_set</span><span class="p">)</span>
+<span class="c1"># Check if the Scoliosis is a direct or indirect child</span>
+<span class="c1"># of Abnormal axial skeleton morphology</span>
+
+<span class="n">term</span><span class="o">.</span><span class="n">child_of</span><span class="p">(</span><span class="n">term_2</span><span class="p">)</span>
+<span class="c1">#&gt; True</span>
+
+<span class="c1"># or vice versa</span>
+<span class="n">term_2</span><span class="o">.</span><span class="n">parent_of</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; True</span>
+
+<span class="c1"># show all nodes between two term:</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">path_to_other</span><span class="p">(</span><span class="n">term_2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">HP:0002650 | Scoliosis</span>
+<span class="sd">HP:0010674 | Abnormality of the curvature of the vertebral column</span>
+<span class="sd">HP:0000925 | Abnormality of the vertebral column</span>
+<span class="sd">HP:0009121 | Abnormal axial skeleton morphology</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Steps from Term 1 to Term 2: </span><span class="si">{</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1">#&gt; Steps from Term 1 to Term 2: 3</span>
+
+
+<span class="c1"># Calculate the similarity between two terms</span>
+<span class="n">term</span><span class="o">.</span><span class="n">similarity_score</span><span class="p">(</span><span class="n">term_2</span><span class="p">)</span>
+<span class="c1">#&gt; 0.442</span>
 </pre></div>
 </div>
+<p><em>(This script is complete, it should run “as is”)</em></p>
 </div>
-<div class="section" id="statistics">
-<h4>Statistics<a class="headerlink" href="#statistics" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">PyHPO</span></code> includes some basic statics method for gene, disease and HPO-Term enrichment analysis.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s say you have a patient with a couple of symptoms and</span>
-<span class="c1"># you want to find out the most likely affected genes</span>
-<span class="c1"># or most likely diseases</span>
+</div>
+<div class="section" id="ontology">
+<h4>Ontology<a class="headerlink" href="#ontology" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Ontology</span></code> contains all HPO terms, their connections to each other and associations to genes and diseases.
+It provides some helper functions for <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> search functionality</p>
+<div class="section" id="id2">
+<h5>Examples<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">HPOSet</span>
 
-<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">from</span> <span class="nn">pyhpo.ontology</span> <span class="kn">import</span> <span class="n">Ontology</span>
-<span class="kn">from</span> <span class="nn">pyhpo.set</span> <span class="kn">import</span> <span class="n">HPOSet</span><span class="p">,</span> <span class="n">BasicHPOSet</span>
+<span class="c1"># initilize the Ontology (this must be done only once)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
 
-<span class="n">hpo_terms</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Decreased circulating antibody level&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Abnormal immunoglobulin level&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Abnormality of B cell physiology&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Abnormal lymphocyte physiology&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Abnormality of humoral immunity&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Lymphoma&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Lymphopenia&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Autoimmunity&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Increased circulating IgG level&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Abnormal lymphocyte count&#39;</span>
-<span class="p">]</span>
+<span class="c1"># Get a term based on its name</span>
+<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;Scoliosis&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0002650 | Scoliosis</span>
 
-<span class="c1"># you can either use a HPOSet for this</span>
-<span class="n">hposet</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">(</span><span class="n">hpo_terms</span><span class="p">)</span>
+<span class="c1"># ...or based on HPO-ID</span>
+<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="s1">&#39;HP:0002650&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0002650 | Scoliosis</span>
 
-<span class="c1"># or just a plain list of HPO Terms</span>
-<span class="n">hposet</span> <span class="o">=</span> <span class="p">[</span><span class="n">Ontology</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">hpo_terms</span><span class="p">]</span>
+<span class="c1"># ...or based on its index</span>
+<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="mi">2650</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0002650 | Scoliosis</span>
 
-<span class="c1"># Initialize an Enrichment model for genes</span>
-<span class="n">gene_model</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">EnrichmentModel</span><span class="p">(</span><span class="s1">&#39;gene&#39;</span><span class="p">)</span>
+<span class="c1"># shortcut to retrieve a term based on its index</span>
+<span class="n">term</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">[</span><span class="mi">2650</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+<span class="c1">#&gt; HP:0002650 | Scoliosis</span>
 
-<span class="c1"># You can also do enrichment for diseases</span>
-<span class="n">disease_model</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">EnrichmentModel</span><span class="p">(</span><span class="s1">&#39;omim&#39;</span><span class="p">)</span>
+<span class="c1"># Search for term</span>
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;olios&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
 
-<span class="c1"># Calculate the Hypergeometric distribution test enrichment</span>
-<span class="n">gene_results</span> <span class="o">=</span> <span class="n">gene_model</span><span class="o">.</span><span class="n">enrichment</span><span class="p">(</span>
-    <span class="s1">&#39;hypergeom&#39;</span><span class="p">,</span>
-    <span class="n">hposet</span>
-<span class="p">)</span>
-<span class="n">disease_results</span> <span class="o">=</span> <span class="n">disease_model</span><span class="o">.</span><span class="n">enrichment</span><span class="p">(</span>
-    <span class="s1">&#39;hypergeom&#39;</span><span class="p">,</span>
-    <span class="n">hposet</span>
-<span class="p">)</span>
-
-<span class="c1"># and print the Top-10 results</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gene_results</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">disease_results</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">HP:0002211 | White forelock</span>
+<span class="sd">HP:0002290 | Poliosis</span>
+<span class="sd">HP:0002650 | Scoliosis</span>
+<span class="sd">HP:0002751 | Kyphoscoliosis</span>
+<span class="sd">HP:0002943 | Thoracic scoliosis</span>
+<span class="sd">HP:0002944 | Thoracolumbar scoliosis</span>
+<span class="sd">HP:0003423 | Thoracolumbar kyphoscoliosis</span>
+<span class="sd">HP:0004619 | Lumbar kyphoscoliosis</span>
+<span class="sd">HP:0004626 | Lumbar scoliosis</span>
+<span class="sd">HP:0005659 | Thoracic kyphoscoliosis</span>
+<span class="sd">HP:0008453 | Congenital kyphoscoliosis</span>
+<span class="sd">HP:0008458 | Progressive congenital scoliosis</span>
+<span class="sd">HP:0100884 | Compensatory scoliosis</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<p>and many more examples in the <a class="reference external" href="https://centogene.github.io/pyhpo/">PyHPO Documentation</a></p>
+<p><em>(This script is complete, it should run “as is”)</em></p>
+<p>The Ontology is a Singleton and should only be initiated once.
+It can be reused across several modules, e.g:</p>
+<p><code class="docutils literal notranslate"><span class="pre">main.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">HPOSet</span>
+
+<span class="kn">import</span> <span class="nn">module2</span>
+
+<span class="c1"># initilize the Ontology</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">module2</span><span class="o">.</span><span class="n">find_term</span><span class="p">(</span><span class="s1">&#39;Compensatory scoliosis&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">module2.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
+
+<span class="k">def</span> <span class="nf">find_term</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Ontology</span><span class="o">.</span><span class="n">get_hpo_object</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="hposet">
+<h4>HPOSet<a class="headerlink" href="#hposet" title="Permalink to this headline">¶</a></h4>
+<p>An <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> is a collection of <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> and can be used to represent e.g. a patient’s clinical information. It provides APIs for filtering, comparisons to other <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> and term/gene/disease enrichments.</p>
+<div class="section" id="id3">
+<h5>Examples:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">HPOSet</span>
+
+<span class="c1"># initilize the Ontology</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+
+<span class="c1"># create HPOSets, corresponding to</span>
+<span class="c1"># e.g. the clinical information of a patient</span>
+<span class="c1"># You can initiate an HPOSet using either</span>
+<span class="c1"># - HPO-ID: &#39;HP:0002943&#39;</span>
+<span class="c1"># - HPO-Name: &#39;Scoliosis&#39;</span>
+<span class="c1"># - HPO-ID (int): 2943</span>
+
+<span class="n">ci_1</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">([</span>
+    <span class="s1">&#39;HP:0002943&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0008458&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0100884&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002944&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002751&#39;</span>
+<span class="p">])</span>
+
+<span class="n">ci_2</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">([</span>
+    <span class="s1">&#39;HP:0002650&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0010674&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0000925&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0009121&#39;</span>
+<span class="p">])</span>
+
+<span class="c1"># Compare the similarity</span>
+<span class="n">ci_1</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">ci_2</span><span class="p">)</span>
+<span class="c1">#&gt; 0.7593552670152157</span>
+
+<span class="c1"># Remove all non-leave nodes from a set</span>
+<span class="n">ci_leaf</span> <span class="o">=</span> <span class="n">ci_2</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">ci_2</span><span class="p">)</span>
+<span class="c1">#&gt; 4</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">ci_leaf</span><span class="p">)</span>
+<span class="c1">#&gt; 1</span>
+<span class="n">ci_2</span>
+<span class="c1">#&gt; HPOSet.from_serialized(&quot;925+2650+9121+10674&quot;)</span>
+<span class="n">ci_leaf</span>
+<span class="c1">#&gt; HPOSet.from_serialized(&quot;2650&quot;)</span>
+
+<span class="c1"># Check the information content of an HPOSet</span>
+<span class="n">ci_1</span><span class="o">.</span><span class="n">information_content</span><span class="p">()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{</span>
+<span class="sd">    &#39;mean&#39;: 6.571224974009769,</span>
+<span class="sd">    &#39;total&#39;: 32.856124870048845,</span>
+<span class="sd">    &#39;max&#39;: 8.97979449089521,</span>
+<span class="sd">    &#39;all&#39;: [5.98406221734122, 8.286647310335265, 8.97979449089521, 5.5458072864100645, 4.059813565067086]</span>
+<span class="sd">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p><em>(This script is complete, it should run “as is”)</em></p>
+</div>
+</div>
+<div class="section" id="get-genes-enriched-in-an-hposet">
+<h4>Get genes enriched in an <code class="docutils literal notranslate"><span class="pre">HPOSet</span></code><a class="headerlink" href="#get-genes-enriched-in-an-hposet" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id4">
+<h5>Examples:<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">HPOSet</span>
+<span class="kn">from</span> <span class="nn">pyhpo.stats</span> <span class="kn">import</span> <span class="n">EnrichmentModel</span>
+
+<span class="c1"># initilize the Ontology</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">Ontology</span><span class="p">()</span>
+
+<span class="n">ci</span> <span class="o">=</span> <span class="n">HPOSet</span><span class="o">.</span><span class="n">from_queries</span><span class="p">([</span>
+    <span class="s1">&#39;HP:0002943&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0008458&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0100884&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002944&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HP:0002751&#39;</span>
+<span class="p">])</span>
+
+<span class="n">gene_model</span> <span class="o">=</span> <span class="n">EnrichmentModel</span><span class="p">(</span><span class="s1">&#39;gene&#39;</span><span class="p">)</span>
+<span class="n">genes</span> <span class="o">=</span> <span class="n">gene_model</span><span class="o">.</span><span class="n">enrichment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;hypergeom&#39;</span><span class="p">,</span> <span class="n">hposet</span><span class="o">=</span><span class="n">ci</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">genes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;item&#39;</span><span class="p">])</span>
+<span class="c1">#&gt; PAPSS2</span>
+</pre></div>
+</div>
+<p><em>(This script is complete, it should run “as is”)</em></p>
+<p>For a more detailed description of how to use PyHPO, visit the <a class="reference external" href="https://centogene.github.io/pyhpo/">PyHPO Documentation</a>.</p>
+</div>
 </div>
 </div>
 <div class="section" id="contributing">

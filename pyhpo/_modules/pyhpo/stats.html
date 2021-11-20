@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pyhpo.stats &mdash; PyHPO 2.7.3 documentation</title>
+  <title>pyhpo.stats &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -61,7 +64,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -93,8 +96,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parser.html">Parser</a></li>
 </ul>
 
             
@@ -161,7 +166,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyhpo.stats</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">hypergeom</span>  <span class="c1"># type: ignore[import]</span>
@@ -176,7 +181,6 @@
 
 <span class="kn">import</span> <span class="nn">pyhpo</span>
 <span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">Ontology</span>
-<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">HPOSet</span>
 
 
@@ -208,12 +212,12 @@
 <span class="sd">        The hypergeometic enrichment score</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">hypergeom</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">hypergeom</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span>
         <span class="n">positive_samples</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># likelyhood of more than X, #see https://blog.alexlenail.me/understanding-and-implementing-the-hypergeometric-test-in-python-a7db688a7458  # noqa: 501</span>
         <span class="n">total</span><span class="p">,</span>
         <span class="n">positive_total</span><span class="p">,</span>
         <span class="n">samples</span>
-    <span class="p">)</span>
+    <span class="p">))</span>
 
 
 <div class="viewcode-block" id="HPOEnrichment"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.HPOEnrichment">[docs]</a><span class="k">class</span> <span class="nc">HPOEnrichment</span><span class="p">():</span>
@@ -392,22 +396,15 @@
 <span class="sd">        * **decipher**</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">attribute_lookup</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">attribute_lookup</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;gene&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">genes</span><span class="p">,</span>
         <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">,</span>
         <span class="s1">&#39;orpha&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">,</span>
         <span class="s1">&#39;decipher&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">decipher_diseases</span>
     <span class="p">}</span>
-    <span class="n">base_lookup</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;gene&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Gene</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
-        <span class="s1">&#39;omim&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Omim</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
-        <span class="s1">&#39;orpha&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Orpha</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">]),</span>
-        <span class="s1">&#39;decipher&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">annotations</span><span class="o">.</span><span class="n">Decipher</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
-    <span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attribute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribute_lookup</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_lookup</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_population_count</span><span class="p">(</span><span class="n">HPOSet</span><span class="p">(</span><span class="n">Ontology</span><span class="p">))</span>
 
 <div class="viewcode-block" id="EnrichmentModel.enrichment"><a class="viewcode-back" href="../../stats.html#pyhpo.stats.EnrichmentModel.enrichment">[docs]</a>    <span class="k">def</span> <span class="nf">enrichment</span><span class="p">(</span>

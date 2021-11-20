@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>HPOSet &mdash; PyHPO 2.7.3 documentation</title>
+  <title>HPOSet &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -63,7 +66,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -118,8 +121,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
             
@@ -194,15 +199,15 @@
 <div class="section" id="hposet-class">
 <h2><code class="docutils literal notranslate"><span class="pre">HPOSet</span></code> class<a class="headerlink" href="#hposet-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pyhpo.set.HPOSet">
-<em class="property">class </em><code class="sig-prename descclassname">pyhpo.set.</code><code class="sig-name descname">HPOSet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">items</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.set.</span></span><span class="sig-name descname"><span class="pre">HPOSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <div class="section" id="child-nodes">
 <h3>child_nodes<a class="headerlink" href="#child-nodes" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.child_nodes">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">child_nodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.child_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.child_nodes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.child_nodes">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">child_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.child_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.child_nodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a new HPOSet tha contains only
 the most specific HPO term for each subtree</p>
 <p>It basically will return only HPO terms
@@ -223,8 +228,8 @@ child nodes of the current HPOSet</p>
 <div class="section" id="remove-modifier">
 <h3>remove_modifier<a class="headerlink" href="#remove-modifier" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.remove_modifier">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">remove_modifier</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.remove_modifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.remove_modifier" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.remove_modifier">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">remove_modifier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.remove_modifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.remove_modifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all modifier terms. By default, this includes</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Mode</span> <span class="pre">of</span> <span class="pre">inheritance:</span> <span class="pre">'HP:0000005'</span></code></p></li>
@@ -249,8 +254,8 @@ child nodes of the current HPOSet</p>
 <div class="section" id="replace-obsolete">
 <h3>replace_obsolete<a class="headerlink" href="#replace-obsolete" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.replace_obsolete">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">replace_obsolete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.replace_obsolete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.replace_obsolete" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.replace_obsolete">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">replace_obsolete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.replace_obsolete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.replace_obsolete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces obsolete terms with the replacement term</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -273,8 +278,8 @@ child nodes of the current HPOSet</p>
 <div class="section" id="all-genes">
 <h3>all_genes<a class="headerlink" href="#all-genes" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.all_genes">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">all_genes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Set<span class="p">[</span><a class="reference internal" href="annotations.html#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton">pyhpo.annotations.GeneSingleton</a><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.all_genes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.all_genes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.all_genes">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">all_genes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.all_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.all_genes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the union of the genes
 attached to the HPO Terms in this set</p>
 <dl class="field-list simple">
@@ -291,8 +296,8 @@ attached to the HPO Terms in this set</p>
 <div class="section" id="omim-diseases">
 <h3>omim_diseases<a class="headerlink" href="#omim-diseases" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.omim_diseases">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">omim_diseases</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Set<span class="p">[</span>pyhpo.annotations.OmimDisease<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.omim_diseases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.omim_diseases" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.omim_diseases">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">omim_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.omim_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.omim_diseases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the union of the Omim diseases
 attached to the HPO Terms in this set</p>
 <dl class="field-list simple">
@@ -309,8 +314,8 @@ attached to the HPO Terms in this set</p>
 <div class="section" id="information-content">
 <h3>information_content<a class="headerlink" href="#information-content" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.information_content">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">information_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kind</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span> &#x2192; Dict<a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.information_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.information_content" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.information_content">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">information_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.information_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.information_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives back basic information content stats about the
 HPOTerms within the set</p>
 <dl class="field-list simple">
@@ -339,8 +344,8 @@ List with all information content values</p></li>
 <div class="section" id="variance">
 <h3>variance<a class="headerlink" href="#variance" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.variance">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">variance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>float<span class="p">, </span>int<span class="p">, </span>int<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.variance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.variance" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.variance">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">variance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.variance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the distances between all its term-pairs. It also provides
 basic calculations for variances among the pairs.</p>
 <dl class="field-list simple">
@@ -364,8 +369,8 @@ basic calculations for variances among the pairs.</p>
 <div class="section" id="combinations">
 <h3>combinations<a class="headerlink" href="#combinations" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.combinations">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">combinations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>Tuple<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">, </span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.combinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.combinations" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.combinations">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">combinations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.combinations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.combinations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper generator function that returns all possible two-pair
 combination between all its terms</p>
 <p>This function is direction dependent. That means that every
@@ -398,14 +403,19 @@ pair will appear twice. Once for each direction</p>
 <span class="p">]</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="combinations-one-way">
 <h3>combinations_one_way<a class="headerlink" href="#combinations-one-way" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.combinations_one_way">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">combinations_one_way</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterator<span class="p">[</span>Tuple<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">, </span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.combinations_one_way"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.combinations_one_way" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.combinations_one_way">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">combinations_one_way</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.combinations_one_way"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.combinations_one_way" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper generator function that returns all possible two-pair
 combination between all its terms</p>
 <p>This methow will report each pair only once</p>
@@ -434,14 +444,19 @@ combination between all its terms</p>
 <span class="p">]</span>
 </pre></div>
 </div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>]]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="similarity">
 <h3>similarity<a class="headerlink" href="#similarity" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.similarity">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">similarity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a></span></em>, <em class="sig-param"><span class="n">kind</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">combine</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'funSimAvg'</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.similarity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.similarity">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'funSimAvg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.similarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the similarity to another HPOSet
 According to Robinson et al, American Journal of Human Genetics, (2008)
 and Pesquita et al, BMC Bioinformatics, (2008)</p>
@@ -482,8 +497,8 @@ See <code class="xref py py-func docutils literal notranslate"><span class="pre"
 <div class="section" id="tojson">
 <h3>toJSON<a class="headerlink" href="#tojson" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.toJSON">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">toJSON</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>dict<span class="p">]</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.toJSON"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.toJSON" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.toJSON">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.toJSON"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.toJSON" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a JSON-like object of the HPOSet</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -502,8 +517,8 @@ See <code class="xref py py-func docutils literal notranslate"><span class="pre"
 <div class="section" id="serialize">
 <h3>serialize<a class="headerlink" href="#serialize" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.serialize">
-<code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.serialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.serialize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.serialize">
+<span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.serialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a string serialization that can be used to
 rebuild the same HPOSet via <a class="reference internal" href="#pyhpo.set.HPOSet.from_serialized" title="pyhpo.set.HPOSet.from_serialized"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyhpo.set.HPOSet.from_serialized()</span></code></a></p>
 <dl class="field-list simple">
@@ -521,8 +536,8 @@ rebuild the same HPOSet via <a class="reference internal" href="#pyhpo.set.HPOSe
 <div class="section" id="basichposet-class">
 <h2><code class="docutils literal notranslate"><span class="pre">BasicHPOSet</span></code> class<a class="headerlink" href="#basichposet-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pyhpo.set.BasicHPOSet">
-<em class="property">class </em><code class="sig-prename descclassname">pyhpo.set.</code><code class="sig-name descname">BasicHPOSet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">items</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm">pyhpo.term.HPOTerm</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#BasicHPOSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.BasicHPOSet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.BasicHPOSet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.set.</span></span><span class="sig-name descname"><span class="pre">BasicHPOSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#BasicHPOSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.BasicHPOSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Child of <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOSet</span></code></a> that automatically:</p>
 <ul class="simple">
 <li><p>removes parent terms</p></li>
@@ -537,8 +552,8 @@ rebuild the same HPOSet via <a class="reference internal" href="#pyhpo.set.HPOSe
 <div class="section" id="from-queries">
 <h3>from_queries<a class="headerlink" href="#from-queries" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.from_queries">
-<em class="property">classmethod </em><code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">from_queries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">queries</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.from_queries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.from_queries" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.from_queries">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">from_queries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queries</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.from_queries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.from_queries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds an HPO set by specifying a list of queries to run on the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.ontology.Ontology</span></code></p>
 <dl class="field-list simple">
@@ -566,8 +581,8 @@ rebuild the same HPOSet via <a class="reference internal" href="#pyhpo.set.HPOSe
 <div class="section" id="from-serialized">
 <h3>from_serialized<a class="headerlink" href="#from-serialized" title="Permalink to this headline">¶</a></h3>
 <dl class="py method">
-<dt id="pyhpo.set.HPOSet.from_serialized">
-<em class="property">classmethod </em><code class="sig-prename descclassname">HPOSet.</code><code class="sig-name descname">from_serialized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pickle</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pyhpo.set.HPOSet" title="pyhpo.set.HPOSet">pyhpo.set.HPOSet</a><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.from_serialized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpo.set.HPOSet.from_serialized" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pyhpo.set.HPOSet.from_serialized">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-prename descclassname"><span class="pre">HPOSet.</span></span><span class="sig-name descname"><span class="pre">from_serialized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pickle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/set.html#HPOSet.from_serialized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.set.HPOSet.from_serialized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Re-Builds an HPO set from a serialized HPOSet object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

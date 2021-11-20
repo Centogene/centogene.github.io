@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pyhpo.parser.diseases &mdash; PyHPO 3.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PyHPO
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hpoterm.html">HPOTerm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ontology.html">Ontology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../annotations.html">Annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../set.html">HPOSet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../similarity.html">Similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parser.html">Parser</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyHPO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../parser.html">pyhpo.parser</a> &raquo;</li>
+        
+      <li>pyhpo.parser.diseases</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyhpo.parser.diseases</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Set</span>
+
+<span class="kn">from</span> <span class="nn">pyhpo.annotations</span> <span class="kn">import</span> <span class="n">DiseaseDict</span>
+<span class="kn">from</span> <span class="nn">pyhpo.annotations</span> <span class="kn">import</span> <span class="n">Decipher</span><span class="p">,</span> <span class="n">Omim</span><span class="p">,</span> <span class="n">Orpha</span>
+<span class="kn">from</span> <span class="nn">pyhpo.annotations</span> <span class="kn">import</span> <span class="n">DecipherDisease</span><span class="p">,</span> <span class="n">OmimDisease</span><span class="p">,</span> <span class="n">OrphaDisease</span>
+<span class="kn">from</span> <span class="nn">pyhpo.parser.generics</span> <span class="kn">import</span> <span class="n">id_from_string</span><span class="p">,</span> <span class="n">remove_outcommented_rows</span>
+<span class="kn">import</span> <span class="nn">pyhpo</span>
+
+
+<span class="n">FILENAME</span> <span class="o">=</span> <span class="s1">&#39;phenotype.hpoa&#39;</span>
+<span class="c1"># Cloumn mappings in phenotype_to_genes file</span>
+<span class="n">DISEASE_ID</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">DISEASE_NAME</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">QUALIFIER</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">HPO_ID</span> <span class="o">=</span> <span class="mi">3</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_phenotype_hpoa_file</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">FILENAME</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span>
+            <span class="n">remove_outcommented_rows</span><span class="p">(</span><span class="n">fh</span><span class="p">),</span>
+            <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">cols</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">disease_class</span><span class="p">:</span> <span class="n">DiseaseDict</span> <span class="o">=</span> <span class="n">DiseaseDict</span><span class="p">()</span>
+            <span class="n">phenotype_source</span><span class="p">,</span> <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="n">DISEASE_ID</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;OMIM&#39;</span><span class="p">:</span>
+                <span class="n">disease_class</span> <span class="o">=</span> <span class="n">Omim</span>
+            <span class="k">elif</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;ORPHA&#39;</span><span class="p">:</span>
+                <span class="n">disease_class</span> <span class="o">=</span> <span class="n">Orpha</span>
+            <span class="k">elif</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;DECIPHER&#39;</span><span class="p">:</span>
+                <span class="n">disease_class</span> <span class="o">=</span> <span class="n">Decipher</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">disease</span> <span class="o">=</span> <span class="n">disease_class</span><span class="p">(</span>
+                <span class="n">diseaseid</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">phenotype_id</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">DISEASE_NAME</span><span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">cols</span><span class="p">[</span><span class="n">QUALIFIER</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">disease</span><span class="o">.</span><span class="n">hpo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_from_string</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">HPO_ID</span><span class="p">]))</span>
+            <span class="k">elif</span> <span class="n">cols</span><span class="p">[</span><span class="n">QUALIFIER</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;NOT&#39;</span><span class="p">:</span>
+                <span class="n">disease</span><span class="o">.</span><span class="n">negative_hpo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_from_string</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">HPO_ID</span><span class="p">]))</span>
+
+
+<span class="k">def</span> <span class="nf">_add_decipher_to_ontology</span><span class="p">(</span><span class="n">ontology</span><span class="p">:</span> <span class="s1">&#39;pyhpo.OntologyClass&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ontology</span><span class="o">.</span><span class="n">_decipher_diseases</span> <span class="o">=</span> <span class="n">all_decipher_diseases</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">decipher</span> <span class="ow">in</span> <span class="n">ontology</span><span class="o">.</span><span class="n">_decipher_diseases</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">decipher</span><span class="o">.</span><span class="n">hpo</span><span class="p">:</span>
+            <span class="n">add_decipher_to_term</span><span class="p">(</span><span class="n">decipher</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">decipher</span><span class="o">.</span><span class="n">negative_hpo</span><span class="p">:</span>
+            <span class="n">add_negative_decipher_to_term</span><span class="p">(</span><span class="n">decipher</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_add_omim_to_ontology</span><span class="p">(</span><span class="n">ontology</span><span class="p">:</span> <span class="s1">&#39;pyhpo.OntologyClass&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ontology</span><span class="o">.</span><span class="n">_omim_diseases</span> <span class="o">=</span> <span class="n">all_omim_diseases</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">omim</span> <span class="ow">in</span> <span class="n">ontology</span><span class="o">.</span><span class="n">_omim_diseases</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">omim</span><span class="o">.</span><span class="n">hpo</span><span class="p">:</span>
+            <span class="n">add_omim_to_term</span><span class="p">(</span><span class="n">omim</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">omim</span><span class="o">.</span><span class="n">negative_hpo</span><span class="p">:</span>
+            <span class="n">add_negative_omim_to_term</span><span class="p">(</span><span class="n">omim</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_add_orpha_to_ontology</span><span class="p">(</span><span class="n">ontology</span><span class="p">:</span> <span class="s1">&#39;pyhpo.OntologyClass&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ontology</span><span class="o">.</span><span class="n">_orpha_diseases</span> <span class="o">=</span> <span class="n">all_orpha_diseases</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">orpha</span> <span class="ow">in</span> <span class="n">ontology</span><span class="o">.</span><span class="n">_orpha_diseases</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">orpha</span><span class="o">.</span><span class="n">hpo</span><span class="p">:</span>
+            <span class="n">add_orpha_to_term</span><span class="p">(</span><span class="n">orpha</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">orpha</span><span class="o">.</span><span class="n">negative_hpo</span><span class="p">:</span>
+            <span class="n">add_negative_orpha_to_term</span><span class="p">(</span><span class="n">orpha</span><span class="p">,</span> <span class="n">ontology</span><span class="p">[</span><span class="n">term_id</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="add_decipher_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_decipher_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_decipher_to_term</span><span class="p">(</span>
+    <span class="n">decipher</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.DecipherDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add Decipher Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    decipher:</span>
+<span class="sd">        Disease to add to term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is associated with diseease</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">decipher</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">decipher_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">decipher_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">decipher</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+        <span class="n">add_decipher_to_term</span><span class="p">(</span><span class="n">decipher</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_negative_decipher_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_negative_decipher_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_negative_decipher_to_term</span><span class="p">(</span>
+    <span class="n">decipher</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.DecipherDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add excluded Decipher Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    decipher:</span>
+<span class="sd">        Disease to exclude from term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is not associated with diseease</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">decipher</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">decipher_excluded_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">decipher_excluded_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">decipher</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">add_negative_decipher_to_term</span><span class="p">(</span><span class="n">decipher</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_omim_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_omim_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_omim_to_term</span><span class="p">(</span>
+    <span class="n">omim</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.OmimDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add OMIM Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    omim:</span>
+<span class="sd">        Disease to add to term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is associated with diseease</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">omim</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">omim_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">omim</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+        <span class="n">add_omim_to_term</span><span class="p">(</span><span class="n">omim</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_negative_omim_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_negative_omim_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_negative_omim_to_term</span><span class="p">(</span>
+    <span class="n">omim</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.OmimDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add excluded OMIM Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    omim:</span>
+<span class="sd">        Disease to exclude from term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is not associated with diseease</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">omim</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">omim_excluded_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">omim_excluded_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">omim</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">add_negative_omim_to_term</span><span class="p">(</span><span class="n">omim</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_orpha_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_orpha_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_orpha_to_term</span><span class="p">(</span>
+    <span class="n">orpha</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.OrphaDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add Orpha Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    orpha:</span>
+<span class="sd">        Disease to add to term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is associated with diseease</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">orpha</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">orpha_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orpha</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+        <span class="n">add_orpha_to_term</span><span class="p">(</span><span class="n">orpha</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_negative_orpha_to_term"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.add_negative_orpha_to_term">[docs]</a><span class="k">def</span> <span class="nf">add_negative_orpha_to_term</span><span class="p">(</span>
+    <span class="n">orpha</span><span class="p">:</span> <span class="s1">&#39;pyhpo.annotations.OrphaDisease&#39;</span><span class="p">,</span>
+    <span class="n">term</span><span class="p">:</span> <span class="s1">&#39;pyhpo.HPOTerm&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursive function to add excluded Orpha Disease</span>
+<span class="sd">    to an HPOTerm and all its parents</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    orpha:</span>
+<span class="sd">        Disease to exclude from term</span>
+<span class="sd">    term:</span>
+<span class="sd">        HPOTerm that is not associated with diseease</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">orpha</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">orpha_excluded_diseases</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">term</span><span class="o">.</span><span class="n">orpha_excluded_diseases</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orpha</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">term</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">add_negative_orpha_to_term</span><span class="p">(</span><span class="n">orpha</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="all_decipher_diseases"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.all_decipher_diseases">[docs]</a><span class="k">def</span> <span class="nf">all_decipher_diseases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;DecipherDisease&#39;</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">Decipher</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="all_omim_diseases"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.all_omim_diseases">[docs]</a><span class="k">def</span> <span class="nf">all_omim_diseases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;OmimDisease&#39;</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">Omim</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="all_orpha_diseases"><a class="viewcode-back" href="../../../parser.html#pyhpo.parser.diseases.all_orpha_diseases">[docs]</a><span class="k">def</span> <span class="nf">all_orpha_diseases</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;OrphaDisease&#39;</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">Orpha</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, CENTOGENE GmbH.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

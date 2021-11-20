@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; PyHPO 2.7.3 documentation</title>
+  <title>Index &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -61,7 +64,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -93,8 +96,10 @@
 <li class="toctree-l1"><a class="reference internal" href="annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
             
@@ -183,13 +188,12 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#V"><strong>V</strong></a>
- | <a href="#X"><strong>X</strong></a>
  
 </div>
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm._index">_index (pyhpo.term.HPOTerm attribute)</a>
+      <li><a href="similarity.html#pyhpo.similarity.base.SimilarityBase.__call__">__call__() (pyhpo.similarity.base.SimilarityBase method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -197,11 +201,33 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="set.html#pyhpo.set.HPOSet.all_genes">all_genes() (pyhpo.set.HPOSet method)</a>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_decipher_to_term">add_decipher_to_term() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.genes.add_gene_to_term">add_gene_to_term() (in module pyhpo.parser.genes)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_negative_decipher_to_term">add_negative_decipher_to_term() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_negative_omim_to_term">add_negative_omim_to_term() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_negative_orpha_to_term">add_negative_orpha_to_term() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_omim_to_term">add_omim_to_term() (in module pyhpo.parser.diseases)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.all_parents">all_parents (pyhpo.term.HPOTerm attribute)</a>
+      <li><a href="parser.html#pyhpo.parser.diseases.add_orpha_to_term">add_orpha_to_term() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.all_decipher_diseases">all_decipher_diseases() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.genes.all_genes">all_genes() (in module pyhpo.parser.genes)</a>
+
+      <ul>
+        <li><a href="set.html#pyhpo.set.HPOSet.all_genes">(pyhpo.set.HPOSet method)</a>
+</li>
+      </ul></li>
+      <li><a href="parser.html#pyhpo.parser.diseases.all_omim_diseases">all_omim_diseases() (in module pyhpo.parser.diseases)</a>
+</li>
+      <li><a href="parser.html#pyhpo.parser.diseases.all_orpha_diseases">all_orpha_diseases() (in module pyhpo.parser.diseases)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -210,6 +236,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="set.html#pyhpo.set.BasicHPOSet">BasicHPOSet (class in pyhpo.set)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="parser.html#pyhpo.parser.build_ontology_annotations">build_ontology_annotations() (in module pyhpo.parser)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -221,8 +251,6 @@
 </li>
       <li><a href="hpoterm.html#pyhpo.term.HPOTerm.child_of">child_of() (pyhpo.term.HPOTerm method)</a>
 </li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.children">children (pyhpo.term.HPOTerm attribute)</a>
-</li>
       <li><a href="matrix.html#pyhpo.matrix.Matrix.columns">columns (pyhpo.matrix.Matrix attribute)</a>
 </li>
   </ul></td>
@@ -230,8 +258,6 @@
       <li><a href="set.html#pyhpo.set.HPOSet.combinations">combinations() (pyhpo.set.HPOSet method)</a>
 </li>
       <li><a href="set.html#pyhpo.set.HPOSet.combinations_one_way">combinations_one_way() (pyhpo.set.HPOSet method)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.comment">comment (pyhpo.term.HPOTerm attribute)</a>
 </li>
       <li><a href="hpoterm.html#pyhpo.term.HPOTerm.common_ancestors">common_ancestors() (pyhpo.term.HPOTerm method)</a>
 </li>
@@ -243,14 +269,10 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.decipher_diseases">decipher_diseases (pyhpo.term.HPOTerm attribute)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.definition">definition (pyhpo.term.HPOTerm attribute)</a>
+      <li><a href="annotations.html#pyhpo.annotations.DiseaseDict">DiseaseDict (class in pyhpo.annotations)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="annotations.html#pyhpo.annotations.DiseaseDict">DiseaseDict (class in pyhpo.annotations)</a>
-</li>
       <li><a href="annotations.html#pyhpo.annotations.DiseaseSingleton">DiseaseSingleton (class in pyhpo.annotations)</a>
 </li>
   </ul></td>
@@ -290,11 +312,7 @@
       <li><a href="annotations.html#pyhpo.annotations.GeneDict">GeneDict (class in pyhpo.annotations)</a>
 </li>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.genes">genes (pyhpo.ontology.OntologyClass attribute)</a>
-
-      <ul>
-        <li><a href="hpoterm.html#pyhpo.term.HPOTerm.genes">(pyhpo.term.HPOTerm attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="annotations.html#pyhpo.annotations.GeneSingleton">GeneSingleton (class in pyhpo.annotations)</a>
@@ -307,8 +325,6 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.hierarchy">hierarchy() (pyhpo.term.HPOTerm method)</a>
-</li>
       <li><a href="annotations.html#pyhpo.annotations.DiseaseSingleton.hpo">hpo (pyhpo.annotations.DiseaseSingleton attribute)</a>
 
       <ul>
@@ -317,8 +333,6 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="annotations.html#pyhpo.annotations.HPO_Gene">HPO_Gene (class in pyhpo.annotations)</a>
-</li>
       <li><a href="stats.html#pyhpo.stats.HPOEnrichment">HPOEnrichment (class in pyhpo.stats)</a>
 </li>
       <li><a href="set.html#pyhpo.set.HPOSet">HPOSet (class in pyhpo.set)</a>
@@ -336,22 +350,12 @@
       <ul>
         <li><a href="annotations.html#pyhpo.annotations.GeneSingleton.id">(pyhpo.annotations.GeneSingleton attribute)</a>
 </li>
-        <li><a href="hpoterm.html#pyhpo.term.HPOTerm.id">(pyhpo.term.HPOTerm attribute)</a>
-</li>
       </ul></li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.id_from_string">id_from_string() (pyhpo.term.HPOTerm static method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.information_content">information_content (pyhpo.term.HPOTerm attribute)</a>
+      <li><a href="parser.html#pyhpo.parser.generics.id_from_string">id_from_string() (in module pyhpo.parser.generics)</a>
 </li>
       <li><a href="set.html#pyhpo.set.HPOSet.information_content">information_content() (pyhpo.set.HPOSet method)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.is_a">is_a (pyhpo.term.HPOTerm attribute)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.is_modifier">is_modifier (pyhpo.term.HPOTerm attribute)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.is_obsolete">is_obsolete (pyhpo.term.HPOTerm attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -394,9 +398,9 @@
       <ul>
         <li><a href="annotations.html#pyhpo.annotations.GeneSingleton.name">(pyhpo.annotations.GeneSingleton attribute)</a>
 </li>
-        <li><a href="hpoterm.html#pyhpo.term.HPOTerm.name">(pyhpo.term.HPOTerm attribute)</a>
-</li>
       </ul></li>
+      <li><a href="annotations.html#pyhpo.annotations.DiseaseSingleton.negative_hpo">negative_hpo (pyhpo.annotations.DiseaseSingleton attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -404,24 +408,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.omim_diseases">omim_diseases (pyhpo.ontology.OntologyClass attribute)</a>
-
-      <ul>
-        <li><a href="hpoterm.html#pyhpo.term.HPOTerm.omim_diseases">(pyhpo.term.HPOTerm attribute)</a>
 </li>
-      </ul></li>
       <li><a href="set.html#pyhpo.set.HPOSet.omim_diseases">omim_diseases() (pyhpo.set.HPOSet method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.omim_excluded_diseases">omim_excluded_diseases (pyhpo.ontology.OntologyClass attribute)</a>
-
-      <ul>
-        <li><a href="hpoterm.html#pyhpo.term.HPOTerm.omim_excluded_diseases">(pyhpo.term.HPOTerm attribute)</a>
 </li>
-      </ul></li>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass">OntologyClass (class in pyhpo.ontology)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.orpha_diseases">orpha_diseases (pyhpo.term.HPOTerm attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -433,19 +427,13 @@
 </li>
       <li><a href="hpoterm.html#pyhpo.term.HPOTerm.parent_of">parent_of() (pyhpo.term.HPOTerm method)</a>
 </li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.parents">parents (pyhpo.term.HPOTerm attribute)</a>
-</li>
-      <li><a href="annotations.html#pyhpo.annotations.parse_pheno_file">parse_pheno_file() (in module pyhpo.annotations)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.parse_synonym">parse_synonym() (pyhpo.term.HPOTerm static method)</a>
+      <li><a href="parser.html#pyhpo.parser.obo.parse_obo_section">parse_obo_section() (in module pyhpo.parser.obo)</a>
 </li>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.path">path() (pyhpo.ontology.OntologyClass method)</a>
 </li>
       <li><a href="hpoterm.html#pyhpo.term.HPOTerm.path_to_other">path_to_other() (pyhpo.term.HPOTerm method)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.print_hierarchy">print_hierarchy() (pyhpo.term.HPOTerm method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -455,13 +443,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="set.html#pyhpo.set.HPOSet.remove_modifier">remove_modifier() (pyhpo.set.HPOSet method)</a>
 </li>
-      <li><a href="annotations.html#pyhpo.annotations.remove_outcommented_rows">remove_outcommented_rows() (in module pyhpo.annotations)</a>
+      <li><a href="parser.html#pyhpo.parser.generics.remove_outcommented_rows">remove_outcommented_rows() (in module pyhpo.parser.generics)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="set.html#pyhpo.set.HPOSet.replace_obsolete">replace_obsolete() (pyhpo.set.HPOSet method)</a>
-</li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.replaced_by">replaced_by (pyhpo.term.HPOTerm attribute)</a>
 </li>
       <li><a href="matrix.html#pyhpo.matrix.Matrix.rows">rows (pyhpo.matrix.Matrix attribute)</a>
 </li>
@@ -485,9 +471,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="hpoterm.html#pyhpo.term.HPOTerm.similarity_score">similarity_score() (pyhpo.term.HPOTerm method)</a>
 </li>
-      <li><a href="annotations.html#pyhpo.annotations.GeneSingleton.symbol">symbol (pyhpo.annotations.GeneSingleton attribute)</a>
+      <li><a href="similarity.html#pyhpo.similarity.base.SimilarityBase">SimilarityBase (class in pyhpo.similarity.base)</a>
 </li>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.synonym">synonym (pyhpo.term.HPOTerm attribute)</a>
+      <li><a href="annotations.html#pyhpo.annotations.GeneSingleton.symbol">symbol (pyhpo.annotations.GeneSingleton attribute)</a>
 </li>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.synonym_match">synonym_match() (pyhpo.ontology.OntologyClass method)</a>
 </li>
@@ -499,6 +485,8 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="parser.html#pyhpo.parser.obo.terms_from_file">terms_from_file() (in module pyhpo.parser.obo)</a>
+</li>
       <li><a href="ontology.html#pyhpo.ontology.OntologyClass.to_dataframe">to_dataframe() (pyhpo.ontology.OntologyClass method)</a>
 </li>
       <li><a href="annotations.html#pyhpo.annotations.DiseaseSingleton.toJSON">toJSON() (pyhpo.annotations.DiseaseSingleton method)</a>
@@ -518,14 +506,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="set.html#pyhpo.set.HPOSet.variance">variance() (pyhpo.set.HPOSet method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="X">X</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="hpoterm.html#pyhpo.term.HPOTerm.xref">xref (pyhpo.term.HPOTerm attribute)</a>
 </li>
   </ul></td>
 </tr></table>

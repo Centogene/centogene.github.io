@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pyhpo.annotations &mdash; PyHPO 2.7.3 documentation</title>
+  <title>pyhpo.annotations &mdash; PyHPO 3.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -61,7 +64,7 @@
             
             
               <div class="version">
-                2.7.3
+                3.0.0
               </div>
             
           
@@ -93,8 +96,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../annotations.html">Annotations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../set.html">HPOSet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../stats.html">Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../similarity.html">Similarity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../matrix.html">Matrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data.html">Handling master data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parser.html">Parser</a></li>
 </ul>
 
             
@@ -161,34 +166,73 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyhpo.annotations</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 
-<span class="kn">from</span> <span class="nn">pyhpo</span> <span class="kn">import</span> <span class="n">HPOTerm</span>
+<span class="k">class</span> <span class="nc">Annotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">hpo</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">_hash</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">_json_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">])</span>
 
-<span class="n">FILENAMES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;HPO_ONTOLOGY&#39;</span><span class="p">:</span> <span class="s1">&#39;hp.obo&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;HPO_GENE&#39;</span><span class="p">:</span> <span class="s1">&#39;phenotype_to_genes.txt&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;HPO_PHENO&#39;</span><span class="p">:</span> <span class="s1">&#39;phenotype.hpoa&#39;</span>
-<span class="p">}</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">toJSON</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Backwards compatibility method</span>
+<span class="sd">        BaseModel include ``.json`` method</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose: bool, default: ``False``</span>
+<span class="sd">            Return all associated HPOTerms</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dict with the following keys</span>
+<span class="sd">            (additional keys might be present, depending on the class)</span>
+
+<span class="sd">            * **id** - The HGNC ID</span>
+<span class="sd">            * **name** - The gene symbol</span>
+<span class="sd">            * **hpo** - (If ``verbose == True``):</span>
+<span class="sd">              set of :class:`pyhpo.term.HPOTerm`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_keys</span><span class="p">:</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">res</span><span class="p">[</span><span class="s1">&#39;hpo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hpo</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span>
+
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">allow_mutation</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">underscore_attrs_are_private</span> <span class="o">=</span> <span class="kc">True</span>
 
 
-<span class="k">class</span> <span class="nc">Annotation</span><span class="p">:</span>
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="o">...</span>
-
-    <span class="nd">@hpo</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="o">...</span>
-
-
-<div class="viewcode-block" id="GeneSingleton"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.GeneSingleton">[docs]</a><span class="k">class</span> <span class="nc">GeneSingleton</span><span class="p">:</span>
+<div class="viewcode-block" id="GeneSingleton"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.GeneSingleton">[docs]</a><span class="k">class</span> <span class="nc">GeneSingleton</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class represents a single gene.</span>
+<span class="sd">    An instance of ``GeneSingleton`` represents a single gene.</span>
 
 <span class="sd">    .. note::</span>
 
@@ -212,88 +256,16 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    idx: int</span>
+<span class="sd">    id: int</span>
 <span class="sd">        HGNC gene ID</span>
 <span class="sd">    name: str</span>
 <span class="sd">        HGNC gene synbol</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">idx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">((</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="p">))</span>
+    <span class="n">_json_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span>
-
-    <span class="nd">@hpo</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
-
-<div class="viewcode-block" id="GeneSingleton.toJSON"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.GeneSingleton.toJSON">[docs]</a>    <span class="k">def</span> <span class="nf">toJSON</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        JSON (dict) representation of ``Gene``</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        verbose: bool, default: ``False``</span>
-<span class="sd">            Return all associated HPOTerms</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dict with the following keys</span>
-
-<span class="sd">            * **id** - The HGNC ID</span>
-<span class="sd">            * **name** - The gene symbol</span>
-<span class="sd">            * **symbol** - The gene symbol (same as ``name``)</span>
-<span class="sd">            * **hpo** - (If ``verbose == True``):</span>
-<span class="sd">              set of :class:`pyhpo.term.HPOTerm`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="n">res</span><span class="p">[</span><span class="s1">&#39;hpo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hpo</span>  <span class="c1"># type: ignore[assignment]</span>
-
-        <span class="k">return</span> <span class="n">res</span></div>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="ow">or</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;Gene([&quot;&quot;, &quot;&quot;, </span><span class="si">{}</span><span class="s1">, &quot;</span><span class="si">{}</span><span class="s1">&quot;])&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 
 
 <div class="viewcode-block" id="GeneDict"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.GeneDict">[docs]</a><span class="k">class</span> <span class="nc">GeneDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -345,46 +317,39 @@
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">cols</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">hgncid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">symbol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">hgncid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeneSingleton</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">cols</span><span class="p">,</span> <span class="n">hgncid</span><span class="p">,</span> <span class="n">symbol</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;GeneDict requires at least one argument&#39;</span><span class="p">)</span>
-
-        <span class="c1"># for backwards compatibility</span>
-        <span class="c1"># we need to create and use this weird list</span>
-        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="n">hgncid</span><span class="p">,</span>
-                <span class="n">symbol</span>
-            <span class="p">]</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: ignore[assignment] # desired behaviour</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">hgncid</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="n">gene</span> <span class="o">=</span> <span class="n">GeneSingleton</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">gene</span> <span class="o">=</span> <span class="n">GeneSingleton</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">hgncid</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">hgncid</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="n">gene</span>
 
         <span class="k">return</span> <span class="n">gene</span>
 
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all Genes to start with blank state.</span>
+
+<span class="sd">        There are almot zero use-cases to ever call this method in</span>
+<span class="sd">        client-side code. If you use code, that modifies the ``GeneDict``</span>
+<span class="sd">        class a lot, you might use this. Under normal circumstences,</span>
+<span class="sd">        this should not be needed.</span>
+
+<span class="sd">        Currently, the primary use case is to clean up the state for</span>
+<span class="sd">        unittests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_names</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="nb">dict</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -422,7 +387,7 @@
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;No gene found for query&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DiseaseSingleton"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.DiseaseSingleton">[docs]</a><span class="k">class</span> <span class="nc">DiseaseSingleton</span><span class="p">:</span>
+<div class="viewcode-block" id="DiseaseSingleton"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.DiseaseSingleton">[docs]</a><span class="k">class</span> <span class="nc">DiseaseSingleton</span><span class="p">(</span><span class="n">Annotation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class represents a single disease.</span>
 
@@ -443,88 +408,18 @@
 
 <span class="sd">    hpo: set of :class:`pyhpo.term.HPOTerm`</span>
 <span class="sd">        all HPOTerms associated to the disease</span>
+<span class="sd">    negative_hpo: set of :class:`pyhpo.term.HPOTerm`</span>
+<span class="sd">        HPOTerms not associated to the disease</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    idx: int</span>
+<span class="sd">    id: int</span>
 <span class="sd">        Disease ID</span>
 <span class="sd">    name: str</span>
 <span class="sd">        Disease name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">diseasetype</span> <span class="o">=</span> <span class="s1">&#39;Undefined&#39;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">idx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">((</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">diseasetype</span>
-        <span class="p">))</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span>
-
-    <span class="nd">@hpo</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">hpo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
-
-<div class="viewcode-block" id="DiseaseSingleton.toJSON"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.DiseaseSingleton.toJSON">[docs]</a>    <span class="k">def</span> <span class="nf">toJSON</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        JSON (dict) representation of ``Disease``</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        verbose: bool, default: ``False``</span>
-<span class="sd">            Return all associated HPOTerms</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dict with the following keys</span>
-
-<span class="sd">            * **id** - The Disease ID</span>
-<span class="sd">            * **name** - The disease name</span>
-<span class="sd">            * **hpo** - (If ``verbose == True``):</span>
-<span class="sd">              set of :class:`pyhpo.term.HPOTerm`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="n">res</span><span class="p">[</span><span class="s1">&#39;hpo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hpo</span>
-
-        <span class="k">return</span> <span class="n">res</span></div>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="ow">or</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">([&quot;&quot;, </span><span class="si">{}</span><span class="s1">, &quot;</span><span class="si">{}</span><span class="s1">&quot;])&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">diseasetype</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="p">)</span></div>
+    <span class="n">negative_hpo</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span></div>
 
 
 <span class="k">class</span> <span class="nc">OmimDisease</span><span class="p">(</span><span class="n">DiseaseSingleton</span><span class="p">):</span>
@@ -590,42 +485,35 @@
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">cols</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">diseaseid</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">diseaseid</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiseaseSingleton</span><span class="p">:</span>
+
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">disease_class</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">cols</span><span class="p">,</span> <span class="n">diseaseid</span><span class="p">,</span> <span class="n">name</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;DiseaseDict requires at least one argument&#39;</span><span class="p">)</span>
-
-        <span class="c1"># for backwards compatibility</span>
-        <span class="c1"># we need to create and use this weird list</span>
-        <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="n">diseaseid</span><span class="p">,</span>
-                <span class="n">name</span>
-            <span class="p">]</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: ignore[assignment]</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">diseaseid</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="n">disease</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disease_class</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">disease</span><span class="p">:</span> <span class="n">DiseaseSingleton</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disease_class</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">diseaseid</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="p">[</span><span class="n">disease</span><span class="p">]</span> <span class="o">=</span> <span class="n">disease</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">disease</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="p">[</span><span class="n">diseaseid</span><span class="p">]</span> <span class="o">=</span> <span class="n">disease</span>
 
         <span class="k">return</span> <span class="n">disease</span>
 
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all Diseases to start with blank state.</span>
+
+<span class="sd">        There are almot zero use-cases to ever call this method in</span>
+<span class="sd">        client-side code. If you use code, that modifies the ``DiseaseDict``</span>
+<span class="sd">        class a lot, you might use this. Under normal circumstences,</span>
+<span class="sd">        this should not be needed.</span>
+
+<span class="sd">        Currently, the primary use case is to clean up the state for</span>
+<span class="sd">        unittests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indicies</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="nb">dict</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -668,174 +556,6 @@
 
 <span class="k">class</span> <span class="nc">DecipherDict</span><span class="p">(</span><span class="n">DiseaseDict</span><span class="p">):</span>
     <span class="n">disease_class</span> <span class="o">=</span> <span class="n">DecipherDisease</span>
-
-
-<div class="viewcode-block" id="HPO_Gene"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.HPO_Gene">[docs]</a><span class="k">class</span> <span class="nc">HPO_Gene</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Associative ``dict`` to link an HPO term to a :class:`.Gene`</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    filename: str</span>
-<span class="sd">        Filename of HPO-Gene association file.</span>
-<span class="sd">        Defaults to filename from HPO</span>
-<span class="sd">    path: str</span>
-<span class="sd">        Path to data files.</span>
-<span class="sd">        Defaults to &#39;./&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">FILENAMES</span><span class="p">[</span><span class="s1">&#39;HPO_GENE&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">load_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fh</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
-                    <span class="k">continue</span>
-                <span class="n">cols</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="n">idx</span> <span class="o">=</span> <span class="n">HPOTerm</span><span class="o">.</span><span class="n">id_from_string</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-                <span class="n">gene</span> <span class="o">=</span> <span class="n">Gene</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
-                <span class="n">gene</span><span class="o">.</span><span class="n">hpo</span> <span class="o">=</span> <span class="n">idx</span>  <span class="c1"># type: ignore[assignment]</span>
-                <span class="k">if</span> <span class="n">gene</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
-                    <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="remove_outcommented_rows"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.remove_outcommented_rows">[docs]</a><span class="k">def</span> <span class="nf">remove_outcommented_rows</span><span class="p">(</span>
-    <span class="n">fh</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">ignorechar</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Removes all rows from a filereader object that start</span>
-<span class="sd">    with a comment character</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    fh: iterator</span>
-<span class="sd">        any object which supports the iterator protocol and</span>
-<span class="sd">        returns a string each time its __next__() method is</span>
-<span class="sd">        called — file objects and list objects are both suitable</span>
-
-<span class="sd">    ignorechar: str, defaults: ``#``</span>
-<span class="sd">        All lines starting with this character will be ignored</span>
-
-<span class="sd">    Yields</span>
-<span class="sd">    ------</span>
-<span class="sd">    row: str</span>
-<span class="sd">        One row of the ``fh`` iterator</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">fh</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ignorechar</span><span class="p">)]</span> <span class="o">!=</span> <span class="n">ignorechar</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">row</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#DatabaseID&#39;</span><span class="p">):</span>
-                <span class="c1"># The header row in phenotype.hpoa file starts with a # as well</span>
-                <span class="k">yield</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
-
-
-<div class="viewcode-block" id="parse_pheno_file"><a class="viewcode-back" href="../../annotations.html#pyhpo.annotations.parse_pheno_file">[docs]</a><span class="k">def</span> <span class="nf">parse_pheno_file</span><span class="p">(</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span><span class="p">,</span>
-    <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parses OMIM-HPO assoation file and generates a positive</span>
-<span class="sd">    and negative annotation dictionary</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    filename: str</span>
-<span class="sd">        Filename of HPO-Gene association file.</span>
-<span class="sd">        Defaults to filename from HPO</span>
-<span class="sd">    path: str</span>
-<span class="sd">        Path to data files.</span>
-<span class="sd">        Defaults to &#39;./&#39;</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    omim_dict: dict</span>
-<span class="sd">        Dictionary containing all HPO-OMIM associations.</span>
-<span class="sd">        HPO-ID is the key</span>
-<span class="sd">    negative_omim_dict: dict</span>
-<span class="sd">        Dictionary containing all negative HPO-OMIM associations.</span>
-<span class="sd">        HPO-ID is the key</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">FILENAMES</span><span class="p">[</span><span class="s1">&#39;HPO_PHENO&#39;</span><span class="p">])</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span>
-            <span class="n">remove_outcommented_rows</span><span class="p">(</span><span class="n">fh</span><span class="p">),</span>
-            <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span>
-        <span class="p">)</span>
-
-        <span class="n">negative_omim_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">omim_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">negative_orpha_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">orpha_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">negative_decipher_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">decipher_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-            <span class="n">idx</span> <span class="o">=</span> <span class="n">HPOTerm</span><span class="o">.</span><span class="n">id_from_string</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;HPO_ID&#39;</span><span class="p">])</span>
-            <span class="n">phenotype_source</span><span class="p">,</span> <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;DatabaseID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
-            <span class="n">qualifier</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Qualifier&#39;</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;OMIM&#39;</span><span class="p">:</span>
-
-                <span class="c1"># To keep backwards compatibility, we&#39;re</span>
-                <span class="c1"># passing the OMIM details in the same order</span>
-                <span class="c1"># as they were present in the old</span>
-                <span class="c1"># annotation files</span>
-                <span class="n">pheno</span> <span class="o">=</span> <span class="n">Omim</span><span class="p">(</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">phenotype_id</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;DiseaseName&#39;</span><span class="p">]]</span>
-                <span class="p">)</span>
-
-                <span class="n">pos_assoc</span> <span class="o">=</span> <span class="n">omim_dict</span>
-                <span class="n">neg_assoc</span> <span class="o">=</span> <span class="n">negative_omim_dict</span>
-
-            <span class="k">elif</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;ORPHA&#39;</span><span class="p">:</span>
-                <span class="n">pheno</span> <span class="o">=</span> <span class="n">Orpha</span><span class="p">(</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">phenotype_id</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;DiseaseName&#39;</span><span class="p">]]</span>
-                <span class="p">)</span>
-
-                <span class="n">pos_assoc</span> <span class="o">=</span> <span class="n">orpha_dict</span>
-                <span class="n">neg_assoc</span> <span class="o">=</span> <span class="n">negative_orpha_dict</span>
-
-            <span class="k">elif</span> <span class="n">phenotype_source</span> <span class="o">==</span> <span class="s1">&#39;DECIPHER&#39;</span><span class="p">:</span>
-                <span class="n">pheno</span> <span class="o">=</span> <span class="n">Decipher</span><span class="p">(</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">phenotype_id</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;DiseaseName&#39;</span><span class="p">]]</span>
-                <span class="p">)</span>
-
-                <span class="n">pos_assoc</span> <span class="o">=</span> <span class="n">decipher_dict</span>
-                <span class="n">neg_assoc</span> <span class="o">=</span> <span class="n">negative_decipher_dict</span>
-
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="k">if</span> <span class="n">qualifier</span> <span class="o">==</span> <span class="s1">&#39;NOT&#39;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">neg_assoc</span><span class="p">:</span>
-                    <span class="n">neg_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">pheno</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">neg_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
-                    <span class="n">neg_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pheno</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">qualifier</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                <span class="n">pheno</span><span class="o">.</span><span class="n">hpo</span> <span class="o">=</span> <span class="n">idx</span>  <span class="c1"># type: ignore[assignment]</span>
-                <span class="k">if</span> <span class="n">idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pos_assoc</span><span class="p">:</span>
-                    <span class="n">pos_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">pheno</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pos_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
-                    <span class="n">pos_assoc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pheno</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">omim_dict</span><span class="p">,</span> <span class="n">negative_omim_dict</span><span class="p">,</span>
-        <span class="n">orpha_dict</span><span class="p">,</span> <span class="n">negative_orpha_dict</span><span class="p">,</span>
-        <span class="n">decipher_dict</span><span class="p">,</span> <span class="n">negative_decipher_dict</span>
-    <span class="p">)</span></div>
 
 
 <span class="n">Omim</span> <span class="o">=</span> <span class="n">OmimDict</span><span class="p">()</span>

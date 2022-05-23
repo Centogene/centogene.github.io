@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pyhpo.term &mdash; PyHPO 3.0.0 documentation</title>
+  <title>pyhpo.term &mdash; PyHPO 3.1.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                3.0.0
+                3.1.0
               </div>
             
           
@@ -168,9 +168,9 @@
   <h1>Source code for pyhpo.term</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">or_</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="n">lru_cache</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
 <span class="kn">from</span> <span class="nn">backports.cached_property</span> <span class="kn">import</span> <span class="n">cached_property</span>
 
 <span class="kn">from</span> <span class="nn">pyhpo.config</span> <span class="kn">import</span> <span class="n">MODIFIER_IDS</span>
@@ -180,11 +180,21 @@
 <span class="kn">from</span> <span class="nn">pyhpo.parser.generics</span> <span class="kn">import</span> <span class="n">id_from_string</span>
 
 
-<span class="k">class</span> <span class="nc">InformationContent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">gene</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">omim</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">orpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">decipher</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<div class="viewcode-block" id="InformationContent"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.InformationContent">[docs]</a><span class="k">class</span> <span class="nc">InformationContent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    InformationContent contains automatically calculated IC based on</span>
+<span class="sd">    direct/indirect associations with genes, omim, orpha and decipher.</span>
+<span class="sd">    IC instances are created automatically and accessed through</span>
+<span class="sd">    :class:`pyhpo.term.HPOTerm` instances.</span>
+
+<span class="sd">    Users can also register and calculate custom IC scores via</span>
+<span class="sd">    :func:`pyhpo.term.InformationContent.set_custom`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gene</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Gene based IC</span>
+    <span class="n">omim</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># OMIM based IC</span>
+    <span class="n">orpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># OrphaNet based IC</span>
+    <span class="n">decipher</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Decipher based IC</span>
+    <span class="n">custom</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -198,7 +208,38 @@
 <span class="sd">            term.information.content[ic_kind]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span> <span class="kn">from</span> <span class="nn">err</span>
+
+<div class="viewcode-block" id="InformationContent.set_custom"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.InformationContent.set_custom">[docs]</a>    <span class="k">def</span> <span class="nf">set_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the IC of a custom score</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key: str</span>
+<span class="sd">            The name of the information-content metric</span>
+<span class="sd">        value: float</span>
+<span class="sd">            The actual information content</span>
+
+
+<span class="sd">        **Example:** ::</span>
+
+<span class="sd">            for term in Ontology:</span>
+<span class="sd">                # For some reason, you want to base the information content</span>
+<span class="sd">                # on the depths of the Term in the ontology</span>
+<span class="sd">                term.setcustom(&#39;depth&#39;,  term.shortest_path_to_root())</span>
+
+<span class="sd">            # and now calculate similarity of two sets</span>
+<span class="sd">            my_similarity = term_set_1.similarity(term_set_2, kind=&#39;depth&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div></div>
 
 
 <div class="viewcode-block" id="HPOTerm"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm">[docs]</a><span class="k">class</span> <span class="nc">HPOTerm</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -209,10 +250,19 @@
 
     <span class="c1"># Always present and mandatory</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The HPO identifier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The name of the HPO term</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Mandatory, calculated during initialization</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The integer representation of the HPO identifier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_hash</span><span class="p">:</span> <span class="nb">int</span>
 
     <span class="c1"># Mandatory for HPOTerm, but not always present in input</span>
@@ -240,6 +290,11 @@
     <span class="n">decipher_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">DecipherDisease</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">decipher_excluded_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">DecipherDisease</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">information_content</span><span class="p">:</span> <span class="n">InformationContent</span> <span class="o">=</span> <span class="n">InformationContent</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The :class:`.InformationContent` of the HPO term.</span>
+<span class="sd">    Multiple kinds of IC are automatically calculated,</span>
+<span class="sd">    others can be manually calculated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_from_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>

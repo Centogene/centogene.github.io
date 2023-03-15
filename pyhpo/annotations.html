@@ -1,111 +1,89 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Annotations &mdash; PyHPO 3.1.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Annotations &mdash; PyHPO 3.1.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="HPOSet" href="set.html" />
     <link rel="prev" title="Ontology" href="ontology.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> PyHPO
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            PyHPO
           </a>
-
-          
-            
-            
               <div class="version">
-                3.1.2
+                3.1.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">API documentation:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="hpoterm.html">HPOTerm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ontology.html">Ontology</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Annotations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#genesingleton-class"><code class="docutils literal notranslate"><span class="pre">GeneSingleton</span></code> class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tojson">toJSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton"><code class="docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton.id"><code class="docutils literal notranslate"><span class="pre">GeneSingleton.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton.name"><code class="docutils literal notranslate"><span class="pre">GeneSingleton.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton.symbol"><code class="docutils literal notranslate"><span class="pre">GeneSingleton.symbol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton.hpo"><code class="docutils literal notranslate"><span class="pre">GeneSingleton.hpo</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#genedict-class"><code class="docutils literal notranslate"><span class="pre">GeneDict</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tojson">toJSON</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.GeneSingleton.toJSON"><code class="docutils literal notranslate"><span class="pre">GeneSingleton.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#genedict-class"><code class="docutils literal notranslate"><span class="pre">GeneDict</span></code> class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.annotations.GeneDict"><code class="docutils literal notranslate"><span class="pre">GeneDict</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#diseasesingleton-class"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code> class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">toJSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton.id"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton.name"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton.hpo"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton.hpo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton.negative_hpo"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton.negative_hpo</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#diseasedict-class"><code class="docutils literal notranslate"><span class="pre">DiseaseDict</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">toJSON</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton.toJSON"><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#diseasedict-class"><code class="docutils literal notranslate"><span class="pre">DiseaseDict</span></code> class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.annotations.DiseaseDict"><code class="docutils literal notranslate"><span class="pre">DiseaseDict</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#omim">Omim</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#orpha">Orpha</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#decipher">Decipher</a></li>
@@ -119,79 +97,38 @@
 <li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">PyHPO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Annotations</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Annotations</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/annotations.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="annotations">
-<h1>Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="annotations">
+<h1>Annotations<a class="headerlink" href="#annotations" title="Permalink to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">Annotations</span></code> section contains various metadata annotations for HPO terms.</p>
-<div class="section" id="genesingleton-class">
-<h2><code class="docutils literal notranslate"><span class="pre">GeneSingleton</span></code> class<a class="headerlink" href="#genesingleton-class" title="Permalink to this headline">¶</a></h2>
+<section id="genesingleton-class">
+<h2><code class="docutils literal notranslate"><span class="pre">GeneSingleton</span></code> class<a class="headerlink" href="#genesingleton-class" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">GeneSingleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/annotations.html#GeneSingleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.GeneSingleton" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">GeneSingleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/annotations.html#GeneSingleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.GeneSingleton" title="Permalink to this definition"></a></dt>
 <dd><p>An instance of <code class="docutils literal notranslate"><span class="pre">GeneSingleton</span></code> represents a single gene.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -201,10 +138,10 @@ to ensure that every gene is only created once.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.id" title="Permalink to this definition"></a></dt>
 <dd><p>HGNC gene ID</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -212,10 +149,10 @@ to ensure that every gene is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.name" title="Permalink to this definition"></a></dt>
 <dd><p>HGNC gene synbol</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -223,10 +160,10 @@ to ensure that every gene is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton.symbol">
-<span class="sig-name descname"><span class="pre">symbol</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.symbol" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">symbol</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.symbol" title="Permalink to this definition"></a></dt>
 <dd><p>HGNC gene symbol (alias of <a class="reference internal" href="#pyhpo.annotations.GeneSingleton.name" title="pyhpo.annotations.GeneSingleton.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">GeneSingleton.name</span></code></a>)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -234,17 +171,17 @@ to ensure that every gene is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton.hpo">
-<span class="sig-name descname"><span class="pre">hpo</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.hpo" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hpo</span></span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.hpo" title="Permalink to this definition"></a></dt>
 <dd><p>all HPOTerms associated to the gene</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set of <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.term.HPOTerm</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<em>int</em>) – HGNC gene ID</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – HGNC gene synbol</p></li>
@@ -253,18 +190,18 @@ to ensure that every gene is only created once.</p>
 </dl>
 </dd></dl>
 
-<div class="section" id="tojson">
-<h3>toJSON<a class="headerlink" href="#tojson" title="Permalink to this headline">¶</a></h3>
+<section id="tojson">
+<h3>toJSON<a class="headerlink" href="#tojson" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneSingleton.toJSON">
-<span class="sig-prename descclassname"><span class="pre">GeneSingleton.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.toJSON" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">GeneSingleton.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpo.annotations.GeneSingleton.toJSON" title="Permalink to this definition"></a></dt>
 <dd><p>Backwards compatibility method
 BaseModel include <code class="docutils literal notranslate"><span class="pre">.json</span></code> method</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>verbose</strong> (bool, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Return all associated HPOTerms</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>A dict with the following keys
 (additional keys might be present, depending on the class)</p>
 <ul class="simple">
@@ -275,19 +212,19 @@ set of <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" titl
 </ul>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="genedict-class">
-<h2><code class="docutils literal notranslate"><span class="pre">GeneDict</span></code> class<a class="headerlink" href="#genedict-class" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="genedict-class">
+<h2><code class="docutils literal notranslate"><span class="pre">GeneDict</span></code> class<a class="headerlink" href="#genedict-class" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.annotations.GeneDict">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">GeneDict</span></span><a class="reference internal" href="_modules/pyhpo/annotations.html#GeneDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.GeneDict" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">GeneDict</span></span><a class="reference internal" href="_modules/pyhpo/annotations.html#GeneDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.GeneDict" title="Permalink to this definition"></a></dt>
 <dd><p>An associative dict of all genes</p>
 <p>Ensures that every gene is a single GeneSingleton instance
 and no duplicate instances are generated during parsing of the
@@ -307,7 +244,7 @@ the instance of GeneDict to ensure that the same gene exists only once.</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cols</strong> (list, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – <p>Only used for backwards compatibility reasons.
 Should have the following entries</p>
@@ -322,21 +259,18 @@ Should have the following entries</p>
 <li><p><strong>symbol</strong> (<em>str</em>) – The gene symbol (alternative to name)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="diseasesingleton-class">
-<h2><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code> class<a class="headerlink" href="#diseasesingleton-class" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="diseasesingleton-class">
+<h2><code class="docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code> class<a class="headerlink" href="#diseasesingleton-class" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">DiseaseSingleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/annotations.html#DiseaseSingleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">DiseaseSingleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/annotations.html#DiseaseSingleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton" title="Permalink to this definition"></a></dt>
 <dd><p>This class represents a single disease.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -347,10 +281,10 @@ to ensure that every disease is only created once.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.id" title="Permalink to this definition"></a></dt>
 <dd><p>Disease ID</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -358,10 +292,10 @@ to ensure that every disease is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton.name">
-<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.name" title="Permalink to this definition"></a></dt>
 <dd><p>disease name</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -369,10 +303,10 @@ to ensure that every disease is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton.hpo">
-<span class="sig-name descname"><span class="pre">hpo</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.hpo" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hpo</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.hpo" title="Permalink to this definition"></a></dt>
 <dd><p>all HPOTerms associated to the disease</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set of <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.term.HPOTerm</span></code></a></p>
 </dd>
 </dl>
@@ -380,17 +314,17 @@ to ensure that every disease is only created once.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton.negative_hpo">
-<span class="sig-name descname"><span class="pre">negative_hpo</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.negative_hpo" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">negative_hpo</span></span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.negative_hpo" title="Permalink to this definition"></a></dt>
 <dd><p>HPOTerms not associated to the disease</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set of <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.term.HPOTerm</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<em>int</em>) – Disease ID</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – Disease name</p></li>
@@ -399,18 +333,18 @@ to ensure that every disease is only created once.</p>
 </dl>
 </dd></dl>
 
-<div class="section" id="id1">
-<h3>toJSON<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>toJSON<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseSingleton.toJSON">
-<span class="sig-prename descclassname"><span class="pre">DiseaseSingleton.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.toJSON" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">DiseaseSingleton.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpo.annotations.DiseaseSingleton.toJSON" title="Permalink to this definition"></a></dt>
 <dd><p>Backwards compatibility method
 BaseModel include <code class="docutils literal notranslate"><span class="pre">.json</span></code> method</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>verbose</strong> (bool, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Return all associated HPOTerms</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>A dict with the following keys
 (additional keys might be present, depending on the class)</p>
 <ul class="simple">
@@ -421,19 +355,19 @@ set of <a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" titl
 </ul>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="diseasedict-class">
-<h2><code class="docutils literal notranslate"><span class="pre">DiseaseDict</span></code> class<a class="headerlink" href="#diseasedict-class" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="diseasedict-class">
+<h2><code class="docutils literal notranslate"><span class="pre">DiseaseDict</span></code> class<a class="headerlink" href="#diseasedict-class" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.annotations.DiseaseDict">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">DiseaseDict</span></span><a class="reference internal" href="_modules/pyhpo/annotations.html#DiseaseDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.DiseaseDict" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.annotations.</span></span><span class="sig-name descname"><span class="pre">DiseaseDict</span></span><a class="reference internal" href="_modules/pyhpo/annotations.html#DiseaseDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.annotations.DiseaseDict" title="Permalink to this definition"></a></dt>
 <dd><p>An associative dict of all Omim Diseases</p>
 <p>Ensures that every Omim Disease is a single OmimDisease instance
 and no duplicate instances are generated during parsing of the
@@ -454,7 +388,7 @@ exists only once.</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cols</strong> (list, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – <p>Only used for backwards compatibility reasons.
 Should have the following entries</p>
@@ -468,76 +402,56 @@ Should have the following entries</p>
 <li><p><strong>name</strong> (<em>str</em>) – The disease name</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton" title="pyhpo.annotations.DiseaseSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code></a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpo.annotations.DiseaseSingleton" title="pyhpo.annotations.DiseaseSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiseaseSingleton</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="omim">
-<h2>Omim<a class="headerlink" href="#omim" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="omim">
+<h2>Omim<a class="headerlink" href="#omim" title="Permalink to this heading"></a></h2>
 <p>Instance of <a class="reference internal" href="#pyhpo.annotations.DiseaseDict" title="pyhpo.annotations.DiseaseDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.annotations.DiseaseDict</span></code></a> to handle Omim diseases. Ensures that diseases are not duplicated through use of Singletons.</p>
-</div>
-<div class="section" id="orpha">
-<h2>Orpha<a class="headerlink" href="#orpha" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="orpha">
+<h2>Orpha<a class="headerlink" href="#orpha" title="Permalink to this heading"></a></h2>
 <p>Instance of <a class="reference internal" href="#pyhpo.annotations.DiseaseDict" title="pyhpo.annotations.DiseaseDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.annotations.DiseaseDict</span></code></a> to handle Orphanet diseases. Ensures that diseases are not duplicated through use of Singletons.</p>
-</div>
-<div class="section" id="decipher">
-<h2>Decipher<a class="headerlink" href="#decipher" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="decipher">
+<h2>Decipher<a class="headerlink" href="#decipher" title="Permalink to this heading"></a></h2>
 <p>Instance of <a class="reference internal" href="#pyhpo.annotations.DiseaseDict" title="pyhpo.annotations.DiseaseDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.annotations.DiseaseDict</span></code></a> to handle Decipher diseases. Ensures that diseases are not duplicated through use of Singletons.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="set.html" class="btn btn-neutral float-right" title="HPOSet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="ontology.html" class="btn btn-neutral float-left" title="Ontology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="set.html" class="btn btn-neutral float-right" title="HPOSet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, CENTOGENE GmbH.
-
-    </p>
+    <p>&#169; Copyright 2021, CENTOGENE GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

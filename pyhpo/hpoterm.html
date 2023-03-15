@@ -1,118 +1,131 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>HPOTerm &mdash; PyHPO 3.1.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>HPOTerm &mdash; PyHPO 3.1.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Ontology" href="ontology.html" />
     <link rel="prev" title="Welcome to PyHPO’s documentation!" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> PyHPO
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            PyHPO
           </a>
-
-          
-            
-            
               <div class="version">
-                3.1.2
+                3.1.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">API documentation:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">HPOTerm</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parent-of">parent_of</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#child-of">child_of</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parent-ids">parent_ids</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#common-ancestors">common_ancestors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#count-parents">count_parents</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#longest-path-to-root">longest_path_to_root</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#shortest-path-to-root">shortest_path_to_root</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#shortest-path-to-parent">shortest_path_to_parent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#longest-path-to-bottom">longest_path_to_bottom</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#path-to-other">path_to_other</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#similarity-score">similarity_score</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tojson">toJSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.term.HPOTerm"><code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.id"><code class="docutils literal notranslate"><span class="pre">HPOTerm.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.name"><code class="docutils literal notranslate"><span class="pre">HPOTerm.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.information_content"><code class="docutils literal notranslate"><span class="pre">HPOTerm.information_content</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.comment"><code class="docutils literal notranslate"><span class="pre">HPOTerm.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.definition"><code class="docutils literal notranslate"><span class="pre">HPOTerm.definition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.synonym"><code class="docutils literal notranslate"><span class="pre">HPOTerm.synonym</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.parents"><code class="docutils literal notranslate"><span class="pre">HPOTerm.parents</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.children"><code class="docutils literal notranslate"><span class="pre">HPOTerm.children</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.genes"><code class="docutils literal notranslate"><span class="pre">HPOTerm.genes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.omim_diseases"><code class="docutils literal notranslate"><span class="pre">HPOTerm.omim_diseases</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.orpha_diseases"><code class="docutils literal notranslate"><span class="pre">HPOTerm.orpha_diseases</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.decipher_diseases"><code class="docutils literal notranslate"><span class="pre">HPOTerm.decipher_diseases</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#parent-of">parent_of</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.parent_of"><code class="docutils literal notranslate"><span class="pre">HPOTerm.parent_of()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#child-of">child_of</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.child_of"><code class="docutils literal notranslate"><span class="pre">HPOTerm.child_of()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#parent-ids">parent_ids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.parent_ids"><code class="docutils literal notranslate"><span class="pre">HPOTerm.parent_ids()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#common-ancestors">common_ancestors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.common_ancestors"><code class="docutils literal notranslate"><span class="pre">HPOTerm.common_ancestors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#count-parents">count_parents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.count_parents"><code class="docutils literal notranslate"><span class="pre">HPOTerm.count_parents()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#longest-path-to-root">longest_path_to_root</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.longest_path_to_root"><code class="docutils literal notranslate"><span class="pre">HPOTerm.longest_path_to_root()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#shortest-path-to-root">shortest_path_to_root</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.shortest_path_to_root"><code class="docutils literal notranslate"><span class="pre">HPOTerm.shortest_path_to_root()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#shortest-path-to-parent">shortest_path_to_parent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.shortest_path_to_parent"><code class="docutils literal notranslate"><span class="pre">HPOTerm.shortest_path_to_parent()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#longest-path-to-bottom">longest_path_to_bottom</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.longest_path_to_bottom"><code class="docutils literal notranslate"><span class="pre">HPOTerm.longest_path_to_bottom()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#path-to-other">path_to_other</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.path_to_other"><code class="docutils literal notranslate"><span class="pre">HPOTerm.path_to_other()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#similarity-score">similarity_score</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.similarity_score"><code class="docutils literal notranslate"><span class="pre">HPOTerm.similarity_score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tojson">toJSON</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.HPOTerm.toJSON"><code class="docutils literal notranslate"><span class="pre">HPOTerm.toJSON()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#informationcontent"><code class="docutils literal notranslate"><span class="pre">InformationContent</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#default-attributes">Default attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#set-custom">set_custom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyhpo.term.InformationContent"><code class="docutils literal notranslate"><span class="pre">InformationContent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-attributes">Default attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.InformationContent.gene"><code class="docutils literal notranslate"><span class="pre">InformationContent.gene</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.InformationContent.omim"><code class="docutils literal notranslate"><span class="pre">InformationContent.omim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.InformationContent.orpha"><code class="docutils literal notranslate"><span class="pre">InformationContent.orpha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.InformationContent.decipher"><code class="docutils literal notranslate"><span class="pre">InformationContent.decipher</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#set-custom">set_custom</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.term.InformationContent.set_custom"><code class="docutils literal notranslate"><span class="pre">InformationContent.set_custom()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -127,101 +140,60 @@
 <li class="toctree-l1"><a class="reference internal" href="parser.html">Parser</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">PyHPO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>HPOTerm</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">HPOTerm</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/hpoterm.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="hpoterm">
-<h1>HPOTerm<a class="headerlink" href="#hpoterm" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="hpoterm">
+<h1>HPOTerm<a class="headerlink" href="#hpoterm" title="Permalink to this heading"></a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> instances contain all relevant information about a single HPO term. They are part of an <code class="docutils literal notranslate"><span class="pre">Ontology</span></code> and contain links to parental and offspring <code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code> s.</p>
-<div class="section" id="id1">
-<h2><code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h2><code class="docutils literal notranslate"><span class="pre">HPOTerm</span></code><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.term.</span></span><span class="sig-name descname"><span class="pre">HPOTerm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.term.</span></span><span class="sig-name descname"><span class="pre">HPOTerm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm" title="Permalink to this definition"></a></dt>
 <dd><p>An HPOTermBase instance can be build solely by itself,
 without knowledge of the actual Ontology</p>
 </dd></dl>
 
-<div class="section" id="attributes">
-<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
 <blockquote>
 <div><dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.id">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#pyhpo.term.HPOTerm.id" title="Permalink to this definition"></a></dt>
 <dd><p>The HPO identifier</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.name">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#pyhpo.term.HPOTerm.name" title="Permalink to this definition"></a></dt>
 <dd><p>The name of the HPO term</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.information_content">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">information_content</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#pyhpo.term.InformationContent" title="pyhpo.term.InformationContent"><span class="pre">pyhpo.term.InformationContent</span></a></em><a class="headerlink" href="#pyhpo.term.HPOTerm.information_content" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">information_content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pyhpo.term.InformationContent" title="pyhpo.term.InformationContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">InformationContent</span></code></a></em><a class="headerlink" href="#pyhpo.term.HPOTerm.information_content" title="Permalink to this definition"></a></dt>
 <dd><p>The <a class="reference internal" href="#pyhpo.term.InformationContent" title="pyhpo.term.InformationContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">InformationContent</span></code></a> of the HPO term.
 Multiple kinds of IC are automatically calculated,
 others can be manually calculated.</p>
@@ -229,190 +201,190 @@ others can be manually calculated.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.comment">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.comment" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#pyhpo.term.HPOTerm.comment" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.definition">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">definition</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.definition" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">definition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#pyhpo.term.HPOTerm.definition" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.synonym">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">synonym</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.synonym" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">synonym</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.synonym" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.parents">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><span class="pre">pyhpo.term.HPOTerm</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.parents" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.parents" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.children">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><span class="pre">pyhpo.term.HPOTerm</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.children" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.children" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.genes">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">genes</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="annotations.html#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><span class="pre">pyhpo.annotations.GeneSingleton</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.genes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">genes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><a class="reference internal" href="annotations.html#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.genes" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.omim_diseases">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">omim_diseases</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">pyhpo.annotations.OmimDisease</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.omim_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">omim_diseases</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">OmimDisease</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.omim_diseases" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.orpha_diseases">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">orpha_diseases</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">pyhpo.annotations.OrphaDisease</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.orpha_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">orpha_diseases</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">OrphaDisease</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.orpha_diseases" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.decipher_diseases">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">decipher_diseases</span></span><em class="property"><span class="pre">:</span> <span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">pyhpo.annotations.DecipherDisease</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.decipher_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">decipher_diseases</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">DecipherDisease</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhpo.term.HPOTerm.decipher_diseases" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </div></blockquote>
-</div>
-<div class="section" id="parent-of">
-<h3>parent_of<a class="headerlink" href="#parent-of" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="parent-of">
+<h3>parent_of<a class="headerlink" href="#parent-of" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.parent_of">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parent_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.parent_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.parent_of" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parent_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.parent_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.parent_of" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">self</span></code> is a direct or indirect parent of <code class="docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm to check for lineage dependency</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Is the HPOTerm a direct or indirect parent of another HPOTerms</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="child-of">
-<h3>child_of<a class="headerlink" href="#child-of" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="child-of">
+<h3>child_of<a class="headerlink" href="#child-of" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.child_of">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">child_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.child_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.child_of" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">child_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.child_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.child_of" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if <code class="docutils literal notranslate"><span class="pre">self</span></code> is a direct or indirect child of <code class="docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm to check for lineage dependency</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Is the HPOTerm a direct or indirect child of another HPOTerms</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="parent-ids">
-<h3>parent_ids<a class="headerlink" href="#parent-ids" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="parent-ids">
+<h3>parent_ids<a class="headerlink" href="#parent-ids" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.parent_ids">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parent_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.parent_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.parent_ids" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">parent_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.parent_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.parent_ids" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="common-ancestors">
-<h3>common_ancestors<a class="headerlink" href="#common-ancestors" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="common-ancestors">
+<h3>common_ancestors<a class="headerlink" href="#common-ancestors" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.common_ancestors">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">common_ancestors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.common_ancestors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.common_ancestors" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">common_ancestors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.common_ancestors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.common_ancestors" title="Permalink to this definition"></a></dt>
 <dd><p>Identifies all common ancestors
 of two HPO terms</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – Target HPO term for path finding</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Set of common ancestor HPOTerms</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="count-parents">
-<h3>count_parents<a class="headerlink" href="#count-parents" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="count-parents">
+<h3>count_parents<a class="headerlink" href="#count-parents" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.count_parents">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">count_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.count_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.count_parents" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">count_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.count_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.count_parents" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates total number of ancestral HPO Terms</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The number of all ancestral HPO Terms</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="longest-path-to-root">
-<h3>longest_path_to_root<a class="headerlink" href="#longest-path-to-root" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="longest-path-to-root">
+<h3>longest_path_to_root<a class="headerlink" href="#longest-path-to-root" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.longest_path_to_root">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">longest_path_to_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.longest_path_to_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.longest_path_to_root" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">longest_path_to_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.longest_path_to_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.longest_path_to_root" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the longest path to root</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Maximum number of nodes until the root HPOTerm</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="shortest-path-to-root">
-<h3>shortest_path_to_root<a class="headerlink" href="#shortest-path-to-root" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="shortest-path-to-root">
+<h3>shortest_path_to_root<a class="headerlink" href="#shortest-path-to-root" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.shortest_path_to_root">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">shortest_path_to_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.shortest_path_to_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.shortest_path_to_root" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">shortest_path_to_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.shortest_path_to_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.shortest_path_to_root" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the shortest path to root</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Minimum number of nodes until the root HPOTerm</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="shortest-path-to-parent">
-<h3>shortest_path_to_parent<a class="headerlink" href="#shortest-path-to-parent" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="shortest-path-to-parent">
+<h3>shortest_path_to_parent<a class="headerlink" href="#shortest-path-to-parent" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.shortest_path_to_parent">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">shortest_path_to_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.shortest_path_to_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.shortest_path_to_parent" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">shortest_path_to_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.shortest_path_to_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.shortest_path_to_parent" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the shortest path to another HPO Term</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><em>HPOTerm</em></a>) – parent HPOTerm instance</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, …]]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>]]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul>
 <li><p><em>int</em> – Minimum number of nodes until the specified HPOTerm</p>
 <p>(float(‘inf’) if <code class="docutils literal notranslate"><span class="pre">other</span></code> is not a parent.)</p>
@@ -426,43 +398,43 @@ of two HPO terms</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="longest-path-to-bottom">
-<h3>longest_path_to_bottom<a class="headerlink" href="#longest-path-to-bottom" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="longest-path-to-bottom">
+<h3>longest_path_to_bottom<a class="headerlink" href="#longest-path-to-bottom" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.longest_path_to_bottom">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">longest_path_to_bottom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.longest_path_to_bottom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.longest_path_to_bottom" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">longest_path_to_bottom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.longest_path_to_bottom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.longest_path_to_bottom" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates how far the most distant child is apart</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – Offset level to indicate for calculation
 Default: 0</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Number of steps to most distant child</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="path-to-other">
-<h3>path_to_other<a class="headerlink" href="#path-to-other" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="path-to-other">
+<h3>path_to_other<a class="headerlink" href="#path-to-other" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.path_to_other">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">path_to_other</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.path_to_other"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.path_to_other" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">path_to_other</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.path_to_other"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.path_to_other" title="Permalink to this definition"></a></dt>
 <dd><p>Identifies the shortest connection between
 two HPO terms</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><em>HPOTerm</em></a>) – Target HPO term for path finding</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, …], <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>, <code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
 </dd>
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>int</em> – Length of path</p></li>
 <li><p><em>tuple</em> – Tuple of HPOTerms in the path</p></li>
@@ -474,16 +446,16 @@ two HPO terms</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="similarity-score">
-<h3>similarity_score<a class="headerlink" href="#similarity-score" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="similarity-score">
+<h3>similarity_score<a class="headerlink" href="#similarity-score" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.similarity_score">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">similarity_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.similarity_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.similarity_score" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">similarity_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.similarity_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.similarity_score" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate the similarity between this and another HPO-Term
 It uses <code class="xref py py-class docutils literal notranslate"><span class="pre">pyhpo.similarity.base._Similarity</span></code> underneath</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>other</strong> (<cite>HPOTerm</cite>) – Other HPO term to compare similarity to</p></li>
 <li><p><strong>kind</strong> (str, default <code class="docutils literal notranslate"><span class="pre">''</span></code>) – <p>Which kind of information content should be calculated.
@@ -519,27 +491,27 @@ see :class::<cite>pyhpo.similarity.base._Similarity</cite>)</p></li>
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="tojson">
-<h3>toJSON<a class="headerlink" href="#tojson" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tojson">
+<h3>toJSON<a class="headerlink" href="#tojson" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.HPOTerm.toJSON">
-<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.toJSON"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.toJSON" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">HPOTerm.</span></span><span class="sig-name descname"><span class="pre">toJSON</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#HPOTerm.toJSON"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.HPOTerm.toJSON" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a JSON-like object of the HPOTerm</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>verbose</strong> (bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Include extra properties</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary with the main properties of the HPOTerm</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -566,13 +538,13 @@ see :class::<cite>pyhpo.similarity.base._Similarity</cite>)</p></li>
 </div>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="informationcontent">
-<h2><code class="docutils literal notranslate"><span class="pre">InformationContent</span></code><a class="headerlink" href="#informationcontent" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="informationcontent">
+<h2><code class="docutils literal notranslate"><span class="pre">InformationContent</span></code><a class="headerlink" href="#informationcontent" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pyhpo.term.</span></span><span class="sig-name descname"><span class="pre">InformationContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#InformationContent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.InformationContent" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpo.term.</span></span><span class="sig-name descname"><span class="pre">InformationContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#InformationContent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.InformationContent" title="Permalink to this definition"></a></dt>
 <dd><p>InformationContent contains automatically calculated IC based on
 direct/indirect associations with genes, omim, orpha and decipher.
 IC instances are created automatically and accessed through
@@ -581,43 +553,46 @@ IC instances are created automatically and accessed through
 <a class="reference internal" href="#pyhpo.term.InformationContent.set_custom" title="pyhpo.term.InformationContent.set_custom"><code class="xref py py-func docutils literal notranslate"><span class="pre">pyhpo.term.InformationContent.set_custom()</span></code></a>.</p>
 </dd></dl>
 
-<div class="section" id="default-attributes">
-<h3>Default attributes<a class="headerlink" href="#default-attributes" title="Permalink to this headline">¶</a></h3>
+<section id="default-attributes">
+<h3>Default attributes<a class="headerlink" href="#default-attributes" title="Permalink to this heading"></a></h3>
 <blockquote>
 <div><dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent.gene">
-<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">gene</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#pyhpo.term.InformationContent.gene" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">gene</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#pyhpo.term.InformationContent.gene" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent.omim">
-<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">omim</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#pyhpo.term.InformationContent.omim" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">omim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#pyhpo.term.InformationContent.omim" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent.orpha">
-<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">orpha</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#pyhpo.term.InformationContent.orpha" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">orpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#pyhpo.term.InformationContent.orpha" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent.decipher">
-<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">decipher</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#pyhpo.term.InformationContent.decipher" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">decipher</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#pyhpo.term.InformationContent.decipher" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </div></blockquote>
-</div>
-<div class="section" id="set-custom">
-<h3>set_custom<a class="headerlink" href="#set-custom" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="set-custom">
+<h3>set_custom<a class="headerlink" href="#set-custom" title="Permalink to this heading"></a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhpo.term.InformationContent.set_custom">
-<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">set_custom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#InformationContent.set_custom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.InformationContent.set_custom" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">InformationContent.</span></span><span class="sig-name descname"><span class="pre">set_custom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/term.html#InformationContent.set_custom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.term.InformationContent.set_custom" title="Permalink to this definition"></a></dt>
 <dd><p>Set the IC of a custom score</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>key</strong> (<em>str</em>) – The name of the information-content metric</p></li>
 <li><p><strong>value</strong> (<em>float</em>) – The actual information content</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 <p><strong>Example:</strong></p>
@@ -630,63 +605,41 @@ IC instances are created automatically and accessed through
 <span class="n">my_similarity</span> <span class="o">=</span> <span class="n">term_set_1</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">term_set_2</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;depth&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-</dl>
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="ontology.html" class="btn btn-neutral float-right" title="Ontology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PyHPO’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ontology.html" class="btn btn-neutral float-right" title="Ontology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, CENTOGENE GmbH.
-
-    </p>
+    <p>&#169; Copyright 2021, CENTOGENE GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

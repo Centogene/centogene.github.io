@@ -1,96 +1,48 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Parser &mdash; PyHPO 3.1.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Parser &mdash; PyHPO 3.1.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Handling master data" href="data.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> PyHPO
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            PyHPO
           </a>
-
-          
-            
-            
               <div class="version">
-                3.1.2
+                3.1.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">API documentation:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="hpoterm.html">HPOTerm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ontology.html">Ontology</a></li>
@@ -102,156 +54,163 @@
 <li class="toctree-l1"><a class="reference internal" href="data.html">Handling master data</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parser</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#public-methods">Public methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#build-ontology-annotations">build_ontology_annotations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id-from-string">id_from_string</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#remove-outcommented-rows">remove_outcommented_rows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-decipher-to-term">add_decipher_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-negative-decipher-to-term">add_negative_decipher_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-omim-to-term">add_omim_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-negative-omim-to-term">add_negative_omim_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-orpha-to-term">add_orpha_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-negative-orpha-to-term">add_negative_orpha_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#all-decipher-diseases">all_decipher_diseases</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#all-omim-diseases">all_omim_diseases</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#all-orpha-diseases">all_orpha_diseases</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-gene-to-term">add_gene_to_term</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#all-genes">all_genes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#terms-from-file">terms_from_file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parse-obo-section">parse_obo_section</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-ontology-annotations">build_ontology_annotations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.build_ontology_annotations"><code class="docutils literal notranslate"><span class="pre">build_ontology_annotations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id-from-string">id_from_string</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.generics.id_from_string"><code class="docutils literal notranslate"><span class="pre">id_from_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-outcommented-rows">remove_outcommented_rows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.generics.remove_outcommented_rows"><code class="docutils literal notranslate"><span class="pre">remove_outcommented_rows()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-decipher-to-term">add_decipher_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_decipher_to_term"><code class="docutils literal notranslate"><span class="pre">add_decipher_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-negative-decipher-to-term">add_negative_decipher_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_negative_decipher_to_term"><code class="docutils literal notranslate"><span class="pre">add_negative_decipher_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-omim-to-term">add_omim_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_omim_to_term"><code class="docutils literal notranslate"><span class="pre">add_omim_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-negative-omim-to-term">add_negative_omim_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_negative_omim_to_term"><code class="docutils literal notranslate"><span class="pre">add_negative_omim_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-orpha-to-term">add_orpha_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_orpha_to_term"><code class="docutils literal notranslate"><span class="pre">add_orpha_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-negative-orpha-to-term">add_negative_orpha_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.add_negative_orpha_to_term"><code class="docutils literal notranslate"><span class="pre">add_negative_orpha_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#all-decipher-diseases">all_decipher_diseases</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.all_decipher_diseases"><code class="docutils literal notranslate"><span class="pre">all_decipher_diseases()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#all-omim-diseases">all_omim_diseases</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.all_omim_diseases"><code class="docutils literal notranslate"><span class="pre">all_omim_diseases()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#all-orpha-diseases">all_orpha_diseases</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.diseases.all_orpha_diseases"><code class="docutils literal notranslate"><span class="pre">all_orpha_diseases()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#add-gene-to-term">add_gene_to_term</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.genes.add_gene_to_term"><code class="docutils literal notranslate"><span class="pre">add_gene_to_term()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#all-genes">all_genes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.genes.all_genes"><code class="docutils literal notranslate"><span class="pre">all_genes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#terms-from-file">terms_from_file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.obo.terms_from_file"><code class="docutils literal notranslate"><span class="pre">terms_from_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#parse-obo-section">parse_obo_section</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpo.parser.obo.parse_obo_section"><code class="docutils literal notranslate"><span class="pre">parse_obo_section()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">PyHPO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Parser</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parser</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/parser.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="parser">
-<h1>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="parser">
+<h1>Parser<a class="headerlink" href="#parser" title="Permalink to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">parser</span></code> section contains functions to parse the master data,
 such as <code class="docutils literal notranslate"><span class="pre">hpo.obo</span></code> and <code class="docutils literal notranslate"><span class="pre">phenotype...</span></code> files. These methods should
 mostly be left untouched and there is very little need for client-side
 code to interact with these methods. The documentation here is mostly
 for developers of the library.</p>
-<div class="section" id="public-methods">
-<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="build-ontology-annotations">
-<h3>build_ontology_annotations<a class="headerlink" href="#build-ontology-annotations" title="Permalink to this headline">¶</a></h3>
+<section id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this heading"></a></h2>
+<section id="build-ontology-annotations">
+<h3>build_ontology_annotations<a class="headerlink" href="#build-ontology-annotations" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.build_ontology_annotations">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.</span></span><span class="sig-name descname"><span class="pre">build_ontology_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser.html#build_ontology_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.build_ontology_annotations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.</span></span><span class="sig-name descname"><span class="pre">build_ontology_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser.html#build_ontology_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.build_ontology_annotations" title="Permalink to this definition"></a></dt>
 <dd><p>Builds all annotations and associated genes and diseases
 to the HPO terms in the Ontology.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The full path to the folder that contains the master data files</p></li>
 <li><p><strong>ontology</strong> (<a class="reference internal" href="ontology.html#pyhpo.ontology.OntologyClass" title="pyhpo.ontology.OntologyClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyClass</span></code></a>) – The ontology of HPO terms</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="id-from-string">
-<h3>id_from_string<a class="headerlink" href="#id-from-string" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id-from-string">
+<h3>id_from_string<a class="headerlink" href="#id-from-string" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.generics.id_from_string">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.generics.</span></span><span class="sig-name descname"><span class="pre">id_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hpo_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/generics.html#id_from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.generics.id_from_string" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.generics.</span></span><span class="sig-name descname"><span class="pre">id_from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hpo_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/generics.html#id_from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.generics.id_from_string" title="Permalink to this definition"></a></dt>
 <dd><p>Formats the HPO-type Term-ID into an integer id</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>hpo_string</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – <p>HPO term ID.</p>
 <p>(e.g.: HP:000001)</p>
 </p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>Integer representation of provided HPO ID</p>
 <p>(e.g.: 1)</p>
 </p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="remove-outcommented-rows">
-<h3>remove_outcommented_rows<a class="headerlink" href="#remove-outcommented-rows" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="remove-outcommented-rows">
+<h3>remove_outcommented_rows<a class="headerlink" href="#remove-outcommented-rows" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.generics.remove_outcommented_rows">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.generics.</span></span><span class="sig-name descname"><span class="pre">remove_outcommented_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignorechar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/generics.html#remove_outcommented_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.generics.remove_outcommented_rows" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.generics.</span></span><span class="sig-name descname"><span class="pre">remove_outcommented_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignorechar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/generics.html#remove_outcommented_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.generics.remove_outcommented_rows" title="Permalink to this definition"></a></dt>
 <dd><p>Removes all rows from a filereader object that start
 with a comment character</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fh</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – any object which supports the iterator protocol and
 returns a string each time its __next__() method is
@@ -259,297 +218,280 @@ called — file objects and list objects are both suitable</p></li>
 <li><p><strong>ignorechar</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – All lines starting with this character(s) will be ignored</p></li>
 </ul>
 </dd>
-<dt class="field-even">Yields</dt>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>row</strong> (<em>str</em>) – One row of the <code class="docutils literal notranslate"><span class="pre">fh</span></code> iterator</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-decipher-to-term">
-<h3>add_decipher_to_term<a class="headerlink" href="#add-decipher-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-decipher-to-term">
+<h3>add_decipher_to_term<a class="headerlink" href="#add-decipher-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_decipher_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_decipher_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decipher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_decipher_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_decipher_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_decipher_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decipher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_decipher_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_decipher_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add Decipher Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>decipher</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DecipherDisease</span></code>) – Disease to add to term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-negative-decipher-to-term">
-<h3>add_negative_decipher_to_term<a class="headerlink" href="#add-negative-decipher-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-negative-decipher-to-term">
+<h3>add_negative_decipher_to_term<a class="headerlink" href="#add-negative-decipher-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_negative_decipher_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_decipher_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decipher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_decipher_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_decipher_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_decipher_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decipher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_decipher_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_decipher_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add excluded Decipher Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>decipher</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DecipherDisease</span></code>) – Disease to exclude from term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is not associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-omim-to-term">
-<h3>add_omim_to_term<a class="headerlink" href="#add-omim-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-omim-to-term">
+<h3>add_omim_to_term<a class="headerlink" href="#add-omim-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_omim_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_omim_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_omim_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_omim_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_omim_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_omim_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_omim_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add OMIM Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>omim</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">OmimDisease</span></code>) – Disease to add to term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-negative-omim-to-term">
-<h3>add_negative_omim_to_term<a class="headerlink" href="#add-negative-omim-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-negative-omim-to-term">
+<h3>add_negative_omim_to_term<a class="headerlink" href="#add-negative-omim-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_negative_omim_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_omim_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_omim_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_omim_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_omim_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_omim_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_omim_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add excluded OMIM Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>omim</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">OmimDisease</span></code>) – Disease to exclude from term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is not associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-orpha-to-term">
-<h3>add_orpha_to_term<a class="headerlink" href="#add-orpha-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-orpha-to-term">
+<h3>add_orpha_to_term<a class="headerlink" href="#add-orpha-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_orpha_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_orpha_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_orpha_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_orpha_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_orpha_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_orpha_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_orpha_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add Orpha Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>orpha</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">OrphaDisease</span></code>) – Disease to add to term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-negative-orpha-to-term">
-<h3>add_negative_orpha_to_term<a class="headerlink" href="#add-negative-orpha-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-negative-orpha-to-term">
+<h3>add_negative_orpha_to_term<a class="headerlink" href="#add-negative-orpha-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.add_negative_orpha_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_orpha_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_orpha_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_orpha_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">add_negative_orpha_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#add_negative_orpha_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.add_negative_orpha_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add excluded Orpha Disease
 to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>orpha</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">OrphaDisease</span></code>) – Disease to exclude from term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is not associated with diseease</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="all-decipher-diseases">
-<h3>all_decipher_diseases<a class="headerlink" href="#all-decipher-diseases" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="all-decipher-diseases">
+<h3>all_decipher_diseases<a class="headerlink" href="#all-decipher-diseases" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.all_decipher_diseases">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_decipher_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_decipher_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_decipher_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_decipher_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_decipher_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_decipher_diseases" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DecipherDisease</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="all-omim-diseases">
-<h3>all_omim_diseases<a class="headerlink" href="#all-omim-diseases" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="all-omim-diseases">
+<h3>all_omim_diseases<a class="headerlink" href="#all-omim-diseases" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.all_omim_diseases">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_omim_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_omim_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_omim_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_omim_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_omim_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_omim_diseases" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">OmimDisease</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="all-orpha-diseases">
-<h3>all_orpha_diseases<a class="headerlink" href="#all-orpha-diseases" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="all-orpha-diseases">
+<h3>all_orpha_diseases<a class="headerlink" href="#all-orpha-diseases" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.diseases.all_orpha_diseases">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_orpha_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_orpha_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_orpha_diseases" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.diseases.</span></span><span class="sig-name descname"><span class="pre">all_orpha_diseases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/diseases.html#all_orpha_diseases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.diseases.all_orpha_diseases" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">OrphaDisease</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="add-gene-to-term">
-<h3>add_gene_to_term<a class="headerlink" href="#add-gene-to-term" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="add-gene-to-term">
+<h3>add_gene_to_term<a class="headerlink" href="#add-gene-to-term" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.genes.add_gene_to_term">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.genes.</span></span><span class="sig-name descname"><span class="pre">add_gene_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/genes.html#add_gene_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.genes.add_gene_to_term" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.genes.</span></span><span class="sig-name descname"><span class="pre">add_gene_to_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/genes.html#add_gene_to_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.genes.add_gene_to_term" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to add Gene to an HPOTerm and all its parents</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>gene</strong> (<a class="reference internal" href="annotations.html#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a>) – Gene to add to term</p></li>
 <li><p><strong>term</strong> (<a class="reference internal" href="hpoterm.html#pyhpo.term.HPOTerm" title="pyhpo.term.HPOTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">HPOTerm</span></code></a>) – HPOTerm that is associated with the gene</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="all-genes">
-<h3>all_genes<a class="headerlink" href="#all-genes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="all-genes">
+<h3>all_genes<a class="headerlink" href="#all-genes" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.genes.all_genes">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.genes.</span></span><span class="sig-name descname"><span class="pre">all_genes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/genes.html#all_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.genes.all_genes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.genes.</span></span><span class="sig-name descname"><span class="pre">all_genes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/genes.html#all_genes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.genes.all_genes" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Set</span></code>[<a class="reference internal" href="annotations.html#pyhpo.annotations.GeneSingleton" title="pyhpo.annotations.GeneSingleton"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeneSingleton</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="terms-from-file">
-<h3>terms_from_file<a class="headerlink" href="#terms-from-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="terms-from-file">
+<h3>terms_from_file<a class="headerlink" href="#terms-from-file" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.obo.terms_from_file">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.obo.</span></span><span class="sig-name descname"><span class="pre">terms_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/obo.html#terms_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.obo.terms_from_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.obo.</span></span><span class="sig-name descname"><span class="pre">terms_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/obo.html#terms_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.obo.terms_from_file" title="Permalink to this definition"></a></dt>
 <dd><p>Reads an obo file line by line to yield
 a dict for building an HPOTerm</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Full path to <code class="docutils literal notranslate"><span class="pre">obo</span></code> file</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="parse-obo-section">
-<h3>parse_obo_section<a class="headerlink" href="#parse-obo-section" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="parse-obo-section">
+<h3>parse_obo_section<a class="headerlink" href="#parse-obo-section" title="Permalink to this heading"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhpo.parser.obo.parse_obo_section">
-<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.obo.</span></span><span class="sig-name descname"><span class="pre">parse_obo_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_section</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/obo.html#parse_obo_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.obo.parse_obo_section" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhpo.parser.obo.</span></span><span class="sig-name descname"><span class="pre">parse_obo_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_section</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpo/parser/obo.html#parse_obo_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhpo.parser.obo.parse_obo_section" title="Permalink to this definition"></a></dt>
 <dd><p>Parses the section of an OBO file for one single HPO term</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>term_section</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Lines of the <code class="docutils literal notranslate"><span class="pre">obo</span></code> file that describe the HPO term</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="data.html" class="btn btn-neutral float-left" title="Handling master data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, CENTOGENE GmbH.
-
-    </p>
+    <p>&#169; Copyright 2021, CENTOGENE GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

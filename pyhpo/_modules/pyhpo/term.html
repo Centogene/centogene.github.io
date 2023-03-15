@@ -1,95 +1,46 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>pyhpo.term &mdash; PyHPO 3.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>pyhpo.term &mdash; PyHPO 3.1.4 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../index.html" class="icon icon-home"> PyHPO
           
-
-          
+          <a href="../../index.html" class="icon icon-home">
+            PyHPO
           </a>
-
-          
-            
-            
               <div class="version">
-                3.1.0
+                3.1.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">API documentation:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../hpoterm.html">HPOTerm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ontology.html">Ontology</a></li>
@@ -102,69 +53,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../parser.html">Parser</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">PyHPO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-        
-      <li>pyhpo.term</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pyhpo.term</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for pyhpo.term</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">or_</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="n">lru_cache</span>
@@ -181,7 +93,7 @@
 
 
 <div class="viewcode-block" id="InformationContent"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.InformationContent">[docs]</a><span class="k">class</span> <span class="nc">InformationContent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    InformationContent contains automatically calculated IC based on</span>
 <span class="sd">    direct/indirect associations with genes, omim, orpha and decipher.</span>
 <span class="sd">    IC instances are created automatically and accessed through</span>
@@ -197,7 +109,7 @@
     <span class="n">custom</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The IC is frequently accessed dynamically. e.g. in PyhPOAPI the</span>
 <span class="sd">        kind of IC is specified in the query (omim / gene)</span>
 <span class="sd">        Due to this, a dynamic access method is provided</span>
@@ -217,7 +129,7 @@
                 <span class="k">raise</span> <span class="ne">AttributeError</span> <span class="kn">from</span> <span class="nn">err</span>
 
 <div class="viewcode-block" id="InformationContent.set_custom"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.InformationContent.set_custom">[docs]</a>    <span class="k">def</span> <span class="nf">set_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the IC of a custom score</span>
 
 <span class="sd">        Parameters</span>
@@ -243,24 +155,24 @@
 
 
 <div class="viewcode-block" id="HPOTerm"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm">[docs]</a><span class="k">class</span> <span class="nc">HPOTerm</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An HPOTermBase instance can be build solely by itself,</span>
 <span class="sd">    without knowledge of the actual Ontology</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Always present and mandatory</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The HPO identifier</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The name of the HPO term</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Mandatory, calculated during initialization</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The integer representation of the HPO identifier</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_hash</span><span class="p">:</span> <span class="nb">int</span>
@@ -290,7 +202,7 @@
     <span class="n">decipher_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">DecipherDisease</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">decipher_excluded_diseases</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">DecipherDisease</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">information_content</span><span class="p">:</span> <span class="n">InformationContent</span> <span class="o">=</span> <span class="n">InformationContent</span><span class="p">()</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The :class:`.InformationContent` of the HPO term.</span>
 <span class="sd">    Multiple kinds of IC are automatically calculated,</span>
 <span class="sd">    others can be manually calculated.</span>
@@ -316,7 +228,7 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">hierarchy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;HPOTerm&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="o">...</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates all paths from current term to Root term</span>
 <span class="sd">        and returns each path as a Tuple of HPOTerms</span>
 
@@ -354,7 +266,7 @@
         <span class="p">]</span></div>
 
 <div class="viewcode-block" id="HPOTerm.parent_of"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.parent_of">[docs]</a>    <span class="k">def</span> <span class="nf">parent_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOTerm&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if ``self`` is a direct or indirect parent of ``other``.</span>
 
 <span class="sd">        Parameters</span>
@@ -370,7 +282,7 @@
         <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HPOTerm.child_of"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.child_of">[docs]</a>    <span class="k">def</span> <span class="nf">child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOTerm&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if ``self`` is a direct or indirect child of ``other``.</span>
 
 <span class="sd">        Parameters</span>
@@ -389,7 +301,7 @@
         <span class="k">return</span> <span class="n">other</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_parents</span></div>
 
 <div class="viewcode-block" id="HPOTerm.common_ancestors"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.common_ancestors">[docs]</a>    <span class="k">def</span> <span class="nf">common_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOTerm&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="s1">&#39;HPOTerm&#39;</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Identifies all common ancestors</span>
 <span class="sd">        of two HPO terms</span>
 
@@ -420,7 +332,7 @@
         <span class="k">return</span> <span class="n">self_ancestors</span> <span class="o">&amp;</span> <span class="n">other_ancestors</span></div>
 
 <div class="viewcode-block" id="HPOTerm.longest_path_to_root"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.longest_path_to_root">[docs]</a>    <span class="k">def</span> <span class="nf">longest_path_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the longest path to root</span>
 
 <span class="sd">        Returns</span>
@@ -433,7 +345,7 @@
         <span class="p">])</span></div>
 
 <div class="viewcode-block" id="HPOTerm.shortest_path_to_root"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.shortest_path_to_root">[docs]</a>    <span class="k">def</span> <span class="nf">shortest_path_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the shortest path to root</span>
 
 <span class="sd">        Returns</span>
@@ -449,7 +361,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOTerm&#39;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;HPOTerm&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the shortest path to another HPO Term</span>
 
 <span class="sd">        Parameters</span>
@@ -491,7 +403,7 @@
             <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span></div>
 
 <div class="viewcode-block" id="HPOTerm.longest_path_to_bottom"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.longest_path_to_bottom">[docs]</a>    <span class="k">def</span> <span class="nf">longest_path_to_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates how far the most distant child is apart</span>
 
 <span class="sd">        Parameters</span>
@@ -518,7 +430,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;HPOTerm&#39;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;HPOTerm&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Identifies the shortest connection between</span>
 <span class="sd">        two HPO terms</span>
 
@@ -556,7 +468,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="HPOTerm.count_parents"><a class="viewcode-back" href="../../hpoterm.html#pyhpo.term.HPOTerm.count_parents">[docs]</a>    <span class="k">def</span> <span class="nf">count_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates total number of ancestral HPO Terms</span>
 
 <span class="sd">        Returns</span>
@@ -575,7 +487,7 @@
         <span class="n">kind</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the similarity between this and another HPO-Term</span>
 <span class="sd">        It uses :class:`pyhpo.similarity.base._Similarity` underneath</span>
 
@@ -626,7 +538,7 @@
         <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is a LRU-chached alias of</span>
 <span class="sd">        :func:`pyhpo.term.HPOTerm.similarity_score`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -636,7 +548,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a JSON-like object of the HPOTerm</span>
 
 <span class="sd">        Parameters</span>
@@ -692,7 +604,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Method is missing&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The hash is precalcuated during initialization</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
@@ -723,46 +635,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, CENTOGENE GmbH.
-
-    </p>
+    <p>&#169; Copyright 2021, CENTOGENE GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
